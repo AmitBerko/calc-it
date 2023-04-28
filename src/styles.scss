@@ -79,13 +79,12 @@ $empty-color: rgb(181, 175, 163);
     gap: 1.25rem;
 
     button {
-        font-size: 4rem;
         width: 100%;
         height: 100%;
         border-radius: 1rem;
         width: 100%;
         height: 100%;
-        font-size: 3.25rem;
+        font-size: 3rem;
         color: rgb(234, 216, 212);
         border: none;
         text-align: center;
@@ -97,7 +96,7 @@ $empty-color: rgb(181, 175, 163);
 
     .operator {
         @include calculator-button($operator-color, $operator-shadow-color);
-        letter-spacing: 0.45rem;
+        letter-spacing: 0.1rem;
     }
 
     .empty {
@@ -108,7 +107,7 @@ $empty-color: rgb(181, 175, 163);
 #result {
     font-family: 'Digital-7';
     text-align: right;
-    font-size: 7rem;
+    font-size: 6.5rem;
     padding: 0.5rem 0 0 0;
 }
 
