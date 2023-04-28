@@ -4,6 +4,8 @@ $operator-color: rgb(70, 74, 77);
 $operator-shadow-color: rgb(26, 26, 26);
 $special-color: rgb(237, 107, 21);
 $special-shadow-color: rgb(183, 72, 1);
+$add-digit-color: rgb(132, 122, 212);
+$add-digit-shadow-color: rgb(64, 55, 126);
 $empty-color: rgb(181, 175, 163);
 
 @mixin calculator-button($color, $shadow-color) {
@@ -97,6 +99,14 @@ $empty-color: rgb(181, 175, 163);
     .operator {
         @include calculator-button($operator-color, $operator-shadow-color);
         letter-spacing: 0.1rem;
+    }
+
+    .special {
+        @include calculator-button($special-color, $special-shadow-color);
+    }
+
+    .add-digit {
+        @include calculator-button($add-digit-color, $add-digit-shadow-color);
     }
 
     .empty {
