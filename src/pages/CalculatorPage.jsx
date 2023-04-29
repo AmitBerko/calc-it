@@ -25,16 +25,17 @@ function CalculatorPage() {
         <div className="editor-buttons-container">
             <OperatorButton edit="true" /> 
             <button className="add-digit">Num</button>
-            <button className="special">SUM</button>
             <button className="special">Reverse</button>
             <button className="special">Mirror</button>
+            <button className="special">_=&gt;_</button>
             <button className="special">+/-</button>
             <button className="special">&lt;&lt;</button>
-            <button className="special">_=&gt;_</button>
+            <button className="special">SUM</button>
+            <button className="special">X<sup>a</sup></button>
         </div>
-        {/* <div className="inputs">
+        <div className="inputs">
             test
-        </div> */}
+        </div>
     </div>
 
 
