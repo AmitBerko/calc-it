@@ -9,7 +9,6 @@ $add-digit-shadow-color: rgb(64, 55, 126);
 $empty-color: rgb(181, 175, 163);
 
 @mixin calculator-button($color, $shadow-color) {
-    cursor: pointer;
     transition: all .15s ease;
     background-color: $color;
     box-shadow: $shadow-color 0 0.65rem;
@@ -31,6 +30,11 @@ $empty-color: rgb(181, 175, 163);
     user-select: none;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .calculator-container {
     padding: 1.5rem;
     display: grid;
@@ -39,7 +43,7 @@ $empty-color: rgb(181, 175, 163);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border: 2px solid black;
+    border: 0.2rem solid black;
     border-radius: 25px;
     width: 27%;
     /* adjust later */
@@ -49,6 +53,46 @@ $empty-color: rgb(181, 175, 163);
         "buttons";
     grid-template-rows: auto 1fr auto;
     background-color: rgb(228, 220, 209);
+}
+
+.editor-container {
+    width: 25%;
+    height: 70%;
+    border: 0.2rem solid black;
+    position: fixed;
+    display: grid; //change back to none
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 1.5rem;
+    border-radius: 0 1rem 1rem 0;
+    background-color: rgb(228, 220, 209); // might change
+    // grid-template-areas: 
+    // "editor-buttons-container"
+    // "add-button add-button add-button"
+    // "input input input";
+
+    .editor-buttons-container {
+        height: 80%;
+        width: 100%;
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 1.25rem 0.75rem;
+
+        button {
+                cursor: pointer;
+                border-radius: 1rem;
+                width: 100%;
+                height: 100%;
+                font-size: 2.25rem;
+                color: rgb(234, 216, 212);
+                border: none;
+                text-align: center;
+            }
+    }
+
+
 }
 
 .screen {
@@ -71,7 +115,6 @@ $empty-color: rgb(181, 175, 163);
 }
 
 .buttons-container {
-    /* background-color: rgb(228, 220, 209); */
     background-color: transparent;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -81,6 +124,7 @@ $empty-color: rgb(181, 175, 163);
     gap: 1.25rem;
 
     button {
+        cursor: pointer;
         width: 100%;
         height: 100%;
         border-radius: 1rem;
@@ -91,27 +135,31 @@ $empty-color: rgb(181, 175, 163);
         border: none;
         text-align: center;
     }
+}
 
-    .clr {
-        @include calculator-button($clr-color, $clr-shadow-color);
-    }
+.clr {
+    @include calculator-button($clr-color, $clr-shadow-color);
+}
 
-    .operator {
-        @include calculator-button($operator-color, $operator-shadow-color);
-        letter-spacing: 0.1rem;
-    }
+.operator {
+    @include calculator-button($operator-color, $operator-shadow-color);
+    letter-spacing: 0.1rem;
+}
 
-    .special {
-        @include calculator-button($special-color, $special-shadow-color);
-    }
+.special {
+    @include calculator-button($special-color, $special-shadow-color);
+}
 
-    .add-digit {
-        @include calculator-button($add-digit-color, $add-digit-shadow-color);
-    }
+.add-digit {
+    @include calculator-button($add-digit-color, $add-digit-shadow-color);
+}
 
-    .empty {
-        background-color: $empty-color;
-    }
+.empty {
+    background-color: $empty-color;
+}
+
+.selected {
+    outline: 0.18rem solid rgb(13, 147, 13);
 }
 
 #result {
