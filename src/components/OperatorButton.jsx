@@ -1,8 +1,8 @@
 import React from 'react'
 
-function OperatorButton({operator, value, result, setResult, moves, setMoves}) {
+function OperatorButton({operator, value, result, setResult, moves, setMoves, edit = false}) {
 
-    function handleClick() {
+    function handleCalculation() {
         const parsedValue = parseFloat(value)
         if (moves == 0) return
         setMoves(moves - 1)
@@ -16,8 +16,18 @@ function OperatorButton({operator, value, result, setResult, moves, setMoves}) {
             setResult(result * parsedValue)
     }
 
+    function handleEdit() {
+        
+    }
+
     return (
-        <button className="operator" onClick={handleClick}>{operator}{value}</button>
+        <>
+            {edit
+                ? <button className="operator" onClick={handleEdit}>OPR</button>
+                : <button className="operator" onClick={handleCalculation}>{operator}{value}</button>
+            }
+        </>
+        
     )
 }
 
