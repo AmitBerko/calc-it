@@ -72,12 +72,12 @@ body {
     // "input input input";
 
     .editor-buttons-container {
-        height: 80%;
+        height: 100%;
         width: 100%;
         align-items: center;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
         gap: 1.25rem 0.75rem;
 
         button {
@@ -91,8 +91,6 @@ body {
                 text-align: center;
             }
     }
-
-
 }
 
 .screen {
