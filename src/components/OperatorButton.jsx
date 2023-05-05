@@ -1,6 +1,6 @@
 import React from 'react'
 
-function OperatorButton({operator, value, result, setResult, moves, setMoves, edit = false}) {
+function OperatorButton({operator, value, result, setResult, moves, setMoves}) {
 
     function handleCalculation() {
         const parsedValue = parseFloat(value)
@@ -16,18 +16,8 @@ function OperatorButton({operator, value, result, setResult, moves, setMoves, ed
             setResult(result * parsedValue)
     }
 
-    function handleEdit() {
-        
-    }
-
     return (
-        <>
-            {edit
-                ? <button className="operator" onClick={handleEdit}>OPR</button>
-                : <button className="operator" onClick={handleCalculation}>{operator}{value}</button>
-            }
-        </>
-        
+        <button className="operator" onClick={handleCalculation}>{operator}{value}</button>    
     )
 }
 
