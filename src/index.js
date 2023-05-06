@@ -1,11 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import CalculatorPage from './pages/CalculatorPage';
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom/client'
+import CalculatorPage from './pages/CalculatorPage'
+import { CalculatorProvider } from './CalculatorContext'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
-    <CalculatorPage />
-  </React.StrictMode>
-);
-
+    <CalculatorProvider>
+        <React.StrictMode>
+            <CalculatorPage />
+        </React.StrictMode>
+    </CalculatorProvider>
+)
