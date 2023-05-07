@@ -2,13 +2,13 @@ import React, {useContext} from 'react'
 import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorButton({...props}) {
-    const { moves, setMoves, goal, result, setResult } = useContext(CalculatorContext)
-    let initialMoves = 0
-    let initialResult = 0
+    const { moves, setMoves, goal, result, setResult, buttons, setButtons,
+            initialMoves, initialResult, hasValuesUpdated } = useContext(CalculatorContext)
     let type = props.type
     let className
     let content
     let onClick
+    let hasWon = false
 
     if (type == 'operatorButton') {
         className = 'operator'
@@ -40,6 +40,13 @@ function CalculatorButton({...props}) {
         content = ''
         onClick = handleEmpty
     }
+
+    function canMove() {
+        if (moves == 0)
+            return false
+        setMoves(prevMoves => prevMoves - 1)
+        return true
+    }
     
     // Empty Button
     function handleEmpty(event) {
@@ -64,9 +71,9 @@ function CalculatorButton({...props}) {
 
     // Operator Button
     function handleOperator() {
+        if (!canMove()) return
         let {operator, value} = props
         const parsedValue = parseFloat(value)
-        setMoves(moves - 1)
         if (operator == '+')
             setResult(prevResult => prevResult + parsedValue)
         else if (operator == '-')
@@ -79,6 +86,7 @@ function CalculatorButton({...props}) {
 
     // Add Digit Button
     function handleAddDigit() {
+        if (!canMove()) return
         let {value} = props
         setResult(prevResult => parseInt(prevResult + value.toString()))
     }
@@ -96,11 +104,30 @@ function CalculatorButton({...props}) {
         console.log('mirror')
     }
 
-    if (moves == -10)
-        onClick = null
+    if (result == goal && initialMoves > moves && initialResult != result) {
+        hasWon = true
+        setTimeout(() => {
+            setResult('success')
+        }, 750);
+    }
+
+    function handleContextMenu(event) {
+        event.preventDefault();
+        const clickedButton = event.target; // get the button that was right-clicked
+        if (clickedButton.id == '2') return
+
+        setButtons(prevButtons => {
+            return prevButtons.map(button => {
+                if (button.id == clickedButton.id)
+                    return {type: 'emptyButton'}
+                else
+                    return button
+            })
+        })
+    }
 
     return (
-        <button onClick={onClick} className={className} {...props}>{content}</button>
+        <button onClick={onClick} className={className} onContextMenu={handleContextMenu} disabled={hasWon} {...props}>{content}</button>
     )
 }
 

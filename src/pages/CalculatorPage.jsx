@@ -10,19 +10,19 @@ function CalculatorPage() {
     // const [moves, setMoves] = useState(5) // Change later
     // const [goal, setGoal] = useState(456) // Change later
     // here
-    const {moves, setMoves, goal, setGoal, result, setResult} = useContext(CalculatorContext)
+    const {moves, setMoves, goal, setGoal, result, setResult, buttons, setButtons} = useContext(CalculatorContext)
 
-    const [buttons, setButtons] = useState([
-        { id: 0, type: 'emptyButton' },
-        { id: 1, type: 'emptyButton' },
-        { id: 2, type: 'clrButton' },
-        { id: 3, type: 'emptyButton' },
-        { id: 4, type: 'emptyButton' },
-        { id: 5, type: 'operatorButton', operator: '+', value: 50 },
-        { id: 6, type: 'emptyButton' },
-        { id: 7, type: 'addDigitButton', value: 5 },
-        { id: 8, type: 'specialButton', specialType: 'mirror' },
-    ])
+    // const [buttons, setButtons] = useState([
+    //     { id: 0, type: 'emptyButton' },
+    //     { id: 1, type: 'emptyButton' },
+    //     { id: 2, type: 'clrButton' },
+    //     { id: 3, type: 'emptyButton' },
+    //     { id: 4, type: 'emptyButton' },
+    //     { id: 5, type: 'operatorButton', operator: '+', value: 50 },
+    //     { id: 6, type: 'emptyButton' },
+    //     { id: 7, type: 'addDigitButton', value: 5 },
+    //     { id: 8, type: 'specialButton', specialType: 'mirror' },
+    // ])
 
   return (
     <>
@@ -55,16 +55,14 @@ function CalculatorPage() {
         </div>
         <div className="buttons-container">
             {
-                // buttons.map((button) => {
-                //     return <CalculatorButton key={button.id} result={result}
-                //     setResult={setResult} goal={goal} moves={moves} 
-                //     setMoves={setMoves} {...buttons[button.id]} />
-                // })
                 // Don't need to pass anything related to moves, goal and result
                 buttons.map((button) => {
                     return <CalculatorButton key={button.id} {...buttons[button.id]} />
                 })
             }
+        </div>
+        <div>
+            result: {result}
         </div>
     </div>
     </>

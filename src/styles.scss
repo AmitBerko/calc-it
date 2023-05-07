@@ -6,6 +6,8 @@ $special-color: rgb(237, 107, 21);
 $special-shadow-color: rgb(183, 72, 1);
 $add-digit-color: rgb(132, 122, 212);
 $add-digit-shadow-color: rgb(64, 55, 126);
+$update-button-color: rgb(61, 142, 41);
+$update-button-shadow-color: rgb(45, 104, 28);
 $empty-color: rgb(181, 175, 163);
 
 @mixin calculator-button($color, $shadow-color) {
@@ -35,41 +37,66 @@ body {
     padding: 0;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .calculator-container {
     padding: 1.5rem;
     display: grid;
-    overflow: hidden;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border: 0.2rem solid black;
     border-radius: 25px;
-    width: 27%;
-    /* adjust later */
-    height: 70%;
+    // width: 27%;
+    // /* adjust later */
+    // height: 70%;
+    width: auto;
+    height: auto;
     grid-template-areas:
         "screen"
         "buttons";
     grid-template-rows: auto 1fr auto;
     background-color: rgb(228, 220, 209);
+
+    .buttons-container {
+        background-color: transparent;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-area: buttons;
+        padding: 1rem;
+        gap: 1.25rem;
+
+        button {
+            cursor: pointer;
+            width: 9rem;
+            height: 6.5rem;
+            border-radius: 1rem;
+            font-size: 3rem;
+            color: rgb(234, 216, 212);
+            border: none;
+            text-align: center;
+        }
+    }
 }
 
 .editor-container {
-    width: 25%;
-    height: 70%;
+    width: auto;
+    height: auto;
     border: 0.2rem solid black;
     position: fixed;
     display: grid; //change back to none
     top: 50%;
+    left: 3%;
     transform: translateY(-50%);
-    padding: 1.5rem;
-    border-radius: 0 1rem 1rem 0;
+    padding: 2.5rem;
+    border-radius: 1rem;
     background-color: rgb(228, 220, 209); // might change
-    // grid-template-areas: 
-    // "editor-buttons-container"
-    // "add-button add-button add-button"
-    // "input input input";
 
     .editor-buttons-container {
         height: 100%;
@@ -81,16 +108,20 @@ body {
         gap: 1.25rem 0.75rem;
 
         button {
-                cursor: pointer;
-                border-radius: 1rem;
-                width: 100%;
-                height: 100%;
-                font-size: 2.25rem;
-                color: rgb(234, 216, 212);
-                border: none;
-                text-align: center;
-            }
+            cursor: pointer;
+            border-radius: 1rem;
+            width: 9rem;
+            height: 8rem;
+            font-size: 2.25rem;
+            color: rgb(234, 216, 212);
+            border: none;
+            text-align: center;
+        }
     }
+}
+
+#inputs {
+    font-size: 4rem;
 }
 
 .screen {
@@ -112,29 +143,6 @@ body {
     border-radius: 1rem;
 }
 
-.buttons-container {
-    background-color: transparent;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-area: buttons;
-    padding: 1rem;
-    gap: 1.25rem;
-
-    button {
-        cursor: pointer;
-        width: 100%;
-        height: 100%;
-        border-radius: 1rem;
-        width: 100%;
-        height: 100%;
-        font-size: 3rem;
-        color: rgb(234, 216, 212);
-        border: none;
-        text-align: center;
-    }
-}
-
 .clr {
     @include calculator-button($clr-color, $clr-shadow-color);
 }
@@ -150,6 +158,10 @@ body {
 
 .add-digit {
     @include calculator-button($add-digit-color, $add-digit-shadow-color);
+}
+
+.update {
+    @include calculator-button($update-button-color, $update-button-shadow-color)
 }
 
 .empty {
@@ -180,4 +192,53 @@ body {
     padding: 1rem;
     background-color: rgb(61, 61, 61);
     border-radius: 0.25rem;
+}
+
+.inputs-container {
+    border: 0.2rem solid black;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translate(-17.5%, -50%);
+    border-radius: 1rem;
+
+    button {
+        font-size: 3rem;
+        display: flex;
+        margin: 0 auto 3rem ;
+        cursor: pointer;
+        padding: 1.25rem;
+        border-radius: 1rem;
+        color: rgb(234, 216, 212);
+        border: none;
+    }
+
+    h1 {
+        margin-top: 1.75rem;
+        font-size: 4rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+        margin: 2rem;
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+
+        input {
+            padding: 0.5rem;
+            max-width: 10rem;
+            font-size: 2rem;
+            border-radius: 0.5rem;
+            border: 2px solid #ccc;
+        }
+    }
 }
