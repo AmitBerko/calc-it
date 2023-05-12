@@ -22,9 +22,21 @@ const CalculatorProvider = ({ children }) => {
     ])
 
     const updateInitialValues = () => {
-        setMoves(initialMoves);
-        setResult(initialResult);
-        setGoal(initialGoal);
+        let moves = parseInt(document.getElementById('initial-moves').value)
+        let result = parseInt(document.getElementById('initial-result').value)
+        let goal = parseInt(document.getElementById('goal-input').value)
+        if (goal == result || moves == 0 || isNaN(moves) || isNaN(result) || isNaN(goal)) {
+            setResult('Bad Input')
+            return
+        }
+
+        setMoves(moves);
+        setResult(result);
+        setGoal(goal);
+        setInitialMoves(moves);
+        setInitialResult(result);
+        setInitialGoal(goal);
+
     };
 
     return (
@@ -53,8 +65,6 @@ const CalculatorProvider = ({ children }) => {
                     <input
                         type="number"
                         id="initial-moves"
-                        value={initialMoves}
-                        onChange={(e) => setInitialMoves(parseInt(e.target.value))}
                     />
                 </div>
                 <div className="input-group">
@@ -62,8 +72,6 @@ const CalculatorProvider = ({ children }) => {
                     <input
                         type="number"
                         id="initial-result"
-                        value={initialResult}
-                        onChange={(e) => setInitialResult(parseInt(e.target.value))}
                     />
                 </div>
                 <div className="input-group">
@@ -71,8 +79,6 @@ const CalculatorProvider = ({ children }) => {
                     <input
                         type="number"
                         id="goal-input"
-                        value={initialGoal}
-                        onChange={(e) => setInitialGoal(parseInt(e.target.value))}
                     />
                 </div>
                 <button className="update" onClick={updateInitialValues}>Update</button>

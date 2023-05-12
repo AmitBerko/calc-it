@@ -1,14 +1,13 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorButton({...props}) {
     const { moves, setMoves, goal, result, setResult, buttons, setButtons,
-            initialMoves, initialResult, hasValuesUpdated } = useContext(CalculatorContext)
+            initialMoves, initialResult } = useContext(CalculatorContext)
     let type = props.type
     let className
     let content
     let onClick
-    let hasWon = false
 
     if (type == 'operatorButton') {
         className = 'operator'
@@ -34,6 +33,15 @@ function CalculatorButton({...props}) {
         } else if (specialType == 'sum') {
             props.onClick = handleSum
             content = 'SUM'
+        } else if (specialType == 'pow') {
+            props.onClick = handlePow
+            content = 'POW'
+        } else if (specialType == 'delete') {
+            props.onClick = handleDelete
+            content = '<<'
+        } else if (specialType == 'plusMinus') {
+            props.onClick = handlePlusMinus
+            content = '+/-'
         }
     } else {
         className = 'empty'
@@ -58,8 +66,7 @@ function CalculatorButton({...props}) {
         if (button == lastSelected) {
             button.classList.remove('selected')
             editor.style.display = 'none'
-        }
-        else if (lastSelected != null)
+        } else if (lastSelected != null)
             lastSelected.classList.remove('selected')
     }
 
@@ -80,7 +87,7 @@ function CalculatorButton({...props}) {
             setResult(prevResult => prevResult - parsedValue)
         else if (operator == '/')
             setResult(prevResult => parseInt(100 * prevResult / parsedValue) / 100) // Rounds 2 digits after dot
-        else if (operator == '*')
+        else if (operator == 'x')
             setResult(prevResult => prevResult * parsedValue)
     }
 
@@ -104,30 +111,49 @@ function CalculatorButton({...props}) {
         console.log('mirror')
     }
 
-    if (result == goal && initialMoves > moves && initialResult != result) {
-        hasWon = true
+    function handlePow() {
+        console.log('pow')
+    }
+
+    function handleDelete() {
+        console.log('delete')
+    }
+
+    function handlePlusMinus() {
+        console.log('plusMinus')
+    }
+
+    if (result == goal && initialResult != result) {
         setTimeout(() => {
             setResult('success')
-        }, 750);
+        }, 350);
     }
 
     function handleContextMenu(event) {
         event.preventDefault();
-        const clickedButton = event.target; // get the button that was right-clicked
-        if (clickedButton.id == '2') return
+        const clickedButton = event.target; // Get the button that was right-clicked
+        if (clickedButton.id == '2') return // Ignore the CLR button
 
         setButtons(prevButtons => {
             return prevButtons.map(button => {
                 if (button.id == clickedButton.id)
-                    return {type: 'emptyButton'}
+                    return {id: button.id, type: 'emptyButton'}
                 else
                     return button
             })
         })
     }
+    if (result == 'success' && className != 'clr')
+        onClick = null
 
     return (
-        <button onClick={onClick} className={className} onContextMenu={handleContextMenu} disabled={hasWon} {...props}>{content}</button>
+        <button 
+            onClick={onClick}
+            className={className} 
+            onContextMenu={handleContextMenu} 
+            {...props}>
+            {content}
+        </button>
     )
 }
 

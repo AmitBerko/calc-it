@@ -6,67 +6,82 @@ import CalculatorButton from '../components/CalculatorButton'
 import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorPage() {
-    // const [result, setResult] = useState(9876) // Change later
-    // const [moves, setMoves] = useState(5) // Change later
-    // const [goal, setGoal] = useState(456) // Change later
-    // here
-    const {moves, setMoves, goal, setGoal, result, setResult, buttons, setButtons} = useContext(CalculatorContext)
+    const { moves, setMoves, goal, setGoal, result, setResult, buttons, setButtons } = useContext(CalculatorContext)
+    const editorButtons = [
+        { id: 0, type: 'operatorButton' },
+        { id: 1, type: 'addDigitButton' },
+        { id: 2, type: 'specialButton', specialType: 'reverse' },
+        { id: 3, type: 'specialButton', specialType: 'mirror' },
+        { id: 4, type: 'specialButton', specialType: 'transform' },
+        { id: 5, type: 'specialButton', specialType: 'plusMinus' },
+        { id: 6, type: 'specialButton', specialType: 'delete' },
+        { id: 7, type: 'specialButton', specialType: 'sum' },
+        { id: 8, type: 'specialButton', specialType: 'pow' },
+    ]
+    const printButtons = () => console.log(buttons)
+    return (
+        <>
+            <div className="editor-container">
+                <div className="editor-buttons-container">
+                    {
+                        editorButtons.map(button => {
+                            return <EditButton key={button.id} {...editorButtons[button.id]}></EditButton>
+                        })
+                    }
 
-    // const [buttons, setButtons] = useState([
-    //     { id: 0, type: 'emptyButton' },
-    //     { id: 1, type: 'emptyButton' },
-    //     { id: 2, type: 'clrButton' },
-    //     { id: 3, type: 'emptyButton' },
-    //     { id: 4, type: 'emptyButton' },
-    //     { id: 5, type: 'operatorButton', operator: '+', value: 50 },
-    //     { id: 6, type: 'emptyButton' },
-    //     { id: 7, type: 'addDigitButton', value: 5 },
-    //     { id: 8, type: 'specialButton', specialType: 'mirror' },
-    // ])
-
-  return (
-    <>
-    <div className="editor-container">
-        <div className="editor-buttons-container">
-            <EditButton type="operatorButton" /> 
-            <button className="add-digit">Num</button>
-            <button className="special">Reverse</button>
-            <button className="special">Mirror</button>
-            <button className="special">_=&gt;_</button>
-            <button className="special">+/-</button>
-            <button className="special">&lt;&lt;</button>
-            <button className="special">SUM</button>
-            <button className="special">X<sup>a</sup></button>
-        </div>
-        <div id="inputs">
-            test
-        </div>
-    </div>
-
-    <div className="calculator-container">
-        <div className="screen-outline">
-            <div className="screen">
-                <div className="level-info">
-                    <div id="moves">MOVES: {moves}</div>
-                    <div id="goal">GOAL: {goal}</div>
                 </div>
-                <div id="result">{result}</div>
+                <div id="inputs">
+                    <div id="operator-container">
+                        <label>Operator:</label>
+                        <select id="operator-input">
+                            <option value=""></option>
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="x">x</option>
+                            <option value="/">/</option>
+                        </select>
+                        <br></br>
+                        <label htmlFor="operator-value-input">Value:</label>
+                        <input
+                            type="number"
+                            id="operator-value-input"
+                        />
+                    </div>
+
+                    <div id="add-digit-container">
+                        <label htmlFor="add-digit-input">Value:</label>
+                        <input
+                            type="number"
+                            id="add-digit-input"
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
-        <div className="buttons-container">
-            {
-                // Don't need to pass anything related to moves, goal and result
-                buttons.map((button) => {
-                    return <CalculatorButton key={button.id} {...buttons[button.id]} />
-                })
-            }
-        </div>
-        <div>
-            result: {result}
-        </div>
-    </div>
-    </>
-  )
+
+            <div className="calculator-container">
+                <div className="screen-outline">
+                    <div className="screen">
+                        <div className="level-info">
+                            <div id="moves">MOVES: {moves}</div>
+                            <div id="goal">GOAL: {goal}</div>
+                        </div>
+                        <div id="result">{result}</div>
+                    </div>
+                </div>
+                <div className="buttons-container">
+                    {
+                        // Don't need to pass anything related to moves, goal and result
+                        buttons.map((button) => {
+                            return <CalculatorButton key={button.id} {...buttons[button.id]} />
+                        })
+                    }
+                </div>
+            </div>
+            <button onClick={printButtons}>
+                asdas
+            </button>
+        </>
+    )
 }
 
 export default CalculatorPage
