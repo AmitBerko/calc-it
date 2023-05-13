@@ -120,17 +120,13 @@ input::-webkit-inner-spin-button {
     }
 }
 
+.hidden {
+    display: none;
+}
+
 #inputs {
     margin-top: 1.75rem;
     font-size: 3rem;
-
-    #add-digit-container {
-        display: none;
-    }
-
-    #operator-container {
-        display: none;
-    }
 
     select {
         font-size: 3rem;
@@ -143,13 +139,13 @@ input::-webkit-inner-spin-button {
     }
     
     input {
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
         margin-left: 0.65rem;
         border-radius: 0.4rem;
         border: 1px solid;
         width: 9rem;
         height: 2.75rem;
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 }
 
