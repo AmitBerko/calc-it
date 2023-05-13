@@ -129,7 +129,7 @@ function CalculatorButton({...props}) {
             newResult = newResult * 10 + temp % 10
             temp = Math.floor(temp / 10)
         }
-        setResult(newResult)
+        setResult(result > 0 ? newResult : -newResult)
     }
 
     function handlePow() {
