@@ -31,7 +31,7 @@ function CalculatorPage() {
 
                 </div>
                 <div id="inputs">
-                    <div id="operator-container">
+                    <div className="hidden" id="operator-container">
                         <label>Operator:</label>
                         <select id="operator-input">
                             <option value=""></option>
@@ -47,12 +47,31 @@ function CalculatorPage() {
                             id="operator-value-input"
                         />
                     </div>
-
-                    <div id="add-digit-container">
+                    <div className="hidden" id="add-digit-container">
                         <label htmlFor="add-digit-input">Value:</label>
                         <input
                             type="number"
                             id="add-digit-input"
+                        />
+                    </div>
+                    <div className="hidden" id="transform-container">
+                        <label htmlFor="transform-from-input">From:</label>
+                        <input
+                            type="number"
+                            id="transform-from-input"
+                        />
+                        <br></br>
+                        <label htmlFor="transform-to-input">To:</label>
+                        <input
+                            type="number"
+                            id="transform-to-input"
+                        />
+                    </div>
+                    <div className="hidden" id="pow-container">
+                        <label htmlFor="pow-input">Power:</label>
+                        <input
+                            type="number"
+                            id="pow-input"
                         />
                     </div>
                 </div>

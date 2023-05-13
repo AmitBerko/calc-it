@@ -35,13 +35,18 @@ function CalculatorButton({...props}) {
             content = 'SUM'
         } else if (specialType == 'pow') {
             props.onClick = handlePow
-            content = 'POW'
+            let { power } = props
+            content = <p style={{ transform: 'translateY(-0.325rem)' }}>X<sup>{power}</sup></p> // שייי
         } else if (specialType == 'delete') {
             props.onClick = handleDelete
             content = '<<'
         } else if (specialType == 'plusMinus') {
             props.onClick = handlePlusMinus
             content = '+/-'
+        } else if (specialType == 'transform') {
+            props.onClick = handleTransform
+            let { transformFrom, transformTo } = props
+            content = `${transformFrom}=>${transformTo}`
         }
     } else {
         className = 'empty'
@@ -50,7 +55,7 @@ function CalculatorButton({...props}) {
     }
 
     function canMove() {
-        if (moves == 0)
+        if (moves == 0 || result == 'too big' || result == 'success')
             return false
         setMoves(prevMoves => prevMoves - 1)
         return true
@@ -100,33 +105,63 @@ function CalculatorButton({...props}) {
 
     // Special Buttons
     function handleReverse() {
-        console.log('reverse')
+        if (!canMove()) return
+        setResult((prevResult) => {
+            return parseInt(prevResult.toString().split('').reverse().join(''))
+        })
     }
 
     function handleSum() {
-        console.log('sum')
+        if (!canMove()) return
+        let temp = Math.abs(result), sum = 0
+        while (temp > 0) {
+            sum += temp % 10
+            temp = Math.floor(temp / 10)
+        }
+        setResult(sum)
     }
 
     function handleMirror() {
-        console.log('mirror')
+        if (!canMove()) return
+        let temp = Math.abs(result)
+        let newResult = temp
+        while (temp > 0) {
+            newResult = newResult * 10 + temp % 10
+            temp = Math.floor(temp / 10)
+        }
+        setResult(newResult)
     }
 
     function handlePow() {
-        console.log('pow')
+        if (!canMove()) return
+        let { power } = props
+        setResult((prevResult) => {
+            return Math.pow(prevResult, power)
+        })
     }
 
     function handleDelete() {
-        console.log('delete')
+        if (!canMove()) return
+        setResult((prevResult) => {
+            return parseInt(prevResult / 10)
+        })
     }
 
     function handlePlusMinus() {
-        console.log('plusMinus')
+        if (!canMove()) return
+        setResult((prevResult) => -prevResult)
+    }
+
+    function handleTransform() {
+        if (!canMove()) return
+        let { transformFrom, transformTo } = props
+        setResult(parseInt(result.toString().replaceAll(transformFrom, transformTo)))
     }
 
     if (result == goal && initialResult != result) {
         setTimeout(() => {
             setResult('success')
-        }, 350);
+        }, 500);
     }
 
     function handleContextMenu(event) {
@@ -143,8 +178,9 @@ function CalculatorButton({...props}) {
             })
         })
     }
-    if (result == 'success' && className != 'clr')
-        onClick = null
+
+    if (result >= 1000000)
+        setResult('too big')
 
     return (
         <button 

@@ -9,6 +9,10 @@ function EditButton({ ...props }) {
     let className
     let content
     let onClick
+    const containers = ['operator-container',
+        'add-digit-container',
+        'transform-container',
+        'pow-container']
 
     if (type == 'operatorButton') {
         className = 'operator'
@@ -60,68 +64,93 @@ function EditButton({ ...props }) {
         )
     }
 
-    function handleOperatorEdit() {
-        let operatorInput = document.getElementById('operator-container');
-        if (operatorInput.style.display == 'none' || operatorInput.style.display == '') {
-            operatorInput.style.display = 'block';
-        } else {
-            let operator = document.getElementById('operator-input').value;
-            let value = parseInt(document.getElementById('operator-value-input').value);
-            if (operator == '' || isNaN(value)) {
-                operatorInput.style.display = 'none'
-                return
+    function toggleContainers(curContainer = '') { // Keep empty to make everything hidden
+        let container
+        for (let i = 0; i < containers.length; i++) {
+            if (containers[i] == curContainer) {
+                container = document.getElementById(curContainer)
+                container.classList.remove('hidden')
+            } else {
+                container = document.getElementById(containers[i])
+                container.classList.add('hidden')
             }
-            let operatorButton = { type: 'operatorButton', operator: operator, value: value };
-            addButton(operatorButton);
-            operatorInput.style.display = 'none';
         }
+        if (curContainer == '')
+            document.getElementsByClassName('editor-container')[0].style.display = 'none'
+    }
+
+    function handleOperatorEdit() {
+        toggleContainers('operator-container')
+        let operator = document.getElementById('operator-input').value;
+        let value = parseInt(document.getElementById('operator-value-input').value);
+        if (operator == '' || isNaN(value)) return
+        let operatorButton = { type: 'operatorButton', operator: operator, value: value };
+        addButton(operatorButton);
+        document.getElementById('operator-input').value = '';
+        document.getElementById('operator-value-input').value = '';
+        toggleContainers()
     }
 
     function handleAddDigitEdit() {
-        let addDigitInput = document.getElementById('add-digit-container');
-        if (addDigitInput.style.display == 'none' || addDigitInput.style.display == '') {
-            addDigitInput.style.display = 'block';
-        } else {
-            let value = parseInt(document.getElementById('add-digit-input').value)
-            if (isNaN(value)) {
-                addDigitInput.style.display = 'none'
-                return
-            }
-            let addDigitButton = { type: 'addDigitButton', value: value };
-            addButton(addDigitButton);
-            addDigitInput.style.display = 'none';
-        }
+        toggleContainers('add-digit-container')
+        let value = parseInt(document.getElementById('add-digit-input').value)
+        if (isNaN(value)) return
+        let addDigitButton = { type: 'addDigitButton', value: value };
+        addButton(addDigitButton);
+        document.getElementById('add-digit-input').value = ''
+        toggleContainers()
+    }
+
+    function handleTransformEdit() {
+        toggleContainers('transform-container')
+        let transformFrom = parseInt(document.getElementById('transform-from-input').value)
+        let transformTo = parseInt(document.getElementById('transform-to-input').value)
+
+        if (isNaN(transformFrom) || isNaN(transformTo)) return
+        let transformButton = { type: 'specialButton', specialType: 'transform',
+            transformFrom: transformFrom, transformTo: transformTo };
+        addButton(transformButton);
+        document.getElementById('transform-from-input').value = ''
+        document.getElementById('transform-to-input').value = ''
+        toggleContainers()
+    }
+
+    function handlePowEdit() {
+        toggleContainers('pow-container')
+        let power = parseInt(document.getElementById('pow-input').value)
+        if (isNaN(power)) return
+        let powButton = { type: 'specialButton', specialType: 'pow', power: power }
+        addButton(powButton);
+        document.getElementById('pow-input').value = ''
+        toggleContainers()
     }
 
     function handleReverseEdit() {
+        toggleContainers()
         let reverseButton = { type: 'specialButton', specialType: 'reverse' }
         addButton(reverseButton)
     }
 
     function handleSumEdit() {
+        toggleContainers()
         let sumButton = { type: 'specialButton', specialType: 'sum' }
         addButton(sumButton)
     }
 
     function handleMirrorEdit() {
+        toggleContainers()
         let mirrorButton = { type: 'specialButton', specialType: 'mirror' }
         addButton(mirrorButton)
     }
 
     function handleDeleteEdit() {
+        toggleContainers()
         let deleteButton = { type: 'specialButton', specialType: 'delete' }
         addButton(deleteButton)
     }
 
-    function handleTransformEdit() {
-        console.log('transform')
-    }
-
-    function handlePowEdit() {
-        console.log('pow')
-    }
-
     function handlePlusMinusEdit() {
+        toggleContainers()
         let plusMinusButton = { type: 'specialButton', specialType: 'plusMinus' }
         addButton(plusMinusButton)
     }
