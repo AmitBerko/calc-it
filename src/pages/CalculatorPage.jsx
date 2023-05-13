@@ -1,12 +1,17 @@
 import React, { useState, useContext } from 'react'
-import "../styles.scss"
+import '../styles.scss'
 import EditButton from '../components/EditButton'
 import CalculatorButton from '../components/CalculatorButton'
-
 import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorPage() {
-    const { moves, setMoves, goal, setGoal, result, setResult, buttons, setButtons } = useContext(CalculatorContext)
+    const {
+        moves,
+        goal,
+        result,
+        buttons,
+    } = useContext(CalculatorContext)
+
     const editorButtons = [
         { id: 0, type: 'operatorButton' },
         { id: 1, type: 'addDigitButton' },
@@ -18,17 +23,14 @@ function CalculatorPage() {
         { id: 7, type: 'specialButton', specialType: 'sum' },
         { id: 8, type: 'specialButton', specialType: 'pow' },
     ]
-    const printButtons = () => console.log(buttons)
+
     return (
         <>
             <div className="editor-container">
                 <div className="editor-buttons-container">
-                    {
-                        editorButtons.map(button => {
-                            return <EditButton key={button.id} {...editorButtons[button.id]}></EditButton>
-                        })
-                    }
-
+                    {editorButtons.map(button => {
+                        return <EditButton key={button.id} {...editorButtons[button.id]}></EditButton>
+                    })}
                 </div>
                 <div id="inputs">
                     <div className="hidden" id="operator-container">
@@ -68,7 +70,7 @@ function CalculatorPage() {
                         />
                     </div>
                     <div className="hidden" id="pow-container">
-                        <label htmlFor="pow-input">Power:</label>
+                        <label htmlFor="pow-input">Value:</label>
                         <input
                             type="number"
                             id="pow-input"
@@ -88,17 +90,11 @@ function CalculatorPage() {
                     </div>
                 </div>
                 <div className="buttons-container">
-                    {
-                        // Don't need to pass anything related to moves, goal and result
-                        buttons.map((button) => {
-                            return <CalculatorButton key={button.id} {...buttons[button.id]} />
-                        })
-                    }
+                    {buttons.map((button) => {
+                        return <CalculatorButton key={button.id} {...buttons[button.id]} />
+                    })}
                 </div>
             </div>
-            <button onClick={printButtons}>
-                asdas
-            </button>
         </>
     )
 }
