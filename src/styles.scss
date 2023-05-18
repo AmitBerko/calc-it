@@ -27,7 +27,6 @@ $empty-color: rgb(181, 175, 163);
 }
 
 * {
-    // outline: 1px dashed red; 
     font-family: sans-serif;
     user-select: none;
 }
@@ -35,6 +34,14 @@ $empty-color: rgb(181, 175, 163);
 body {
     margin: 0;
     padding: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 1rem;
+    text-align: center;
 }
 
 input::-webkit-outer-spin-button,
@@ -52,9 +59,6 @@ input::-webkit-inner-spin-button {
     transform: translate(-50%, -50%);
     border: 0.2rem solid black;
     border-radius: 25px;
-    // width: 27%;
-    // /* adjust later */
-    // height: 70%;
     width: auto;
     height: auto;
     grid-template-areas:
@@ -73,14 +77,9 @@ input::-webkit-inner-spin-button {
         gap: 1.25rem;
 
         button {
-            cursor: pointer;
             width: 9rem;
             height: 6.5rem;
-            border-radius: 1rem;
             font-size: 2.7rem;
-            color: rgb(234, 216, 212);
-            border: none;
-            text-align: center;
         }
     }
 }
@@ -108,14 +107,9 @@ input::-webkit-inner-spin-button {
         gap: 1.25rem 0.75rem;
 
         button {
-            cursor: pointer;
-            border-radius: 1rem;
             width: 9rem;
             height: 8rem;
             font-size: 2.25rem;
-            color: rgb(234, 216, 212);
-            border: none;
-            text-align: center;
         }
     }
 }
@@ -232,11 +226,7 @@ input::-webkit-inner-spin-button {
         font-size: 3rem;
         display: flex;
         margin: 0 auto 3rem ;
-        cursor: pointer;
         padding: 1.25rem;
-        border-radius: 1rem;
-        color: rgb(234, 216, 212);
-        border: none;
     }
 
     h1 {
