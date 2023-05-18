@@ -11,7 +11,7 @@ $update-button-shadow-color: rgb(45, 104, 28);
 $empty-color: rgb(181, 175, 163);
 
 @mixin calculator-button($color, $shadow-color) {
-    transition: all .15s ease;
+    transition: all 0.15s ease;
     background-color: $color;
     box-shadow: $shadow-color 0 0.65rem;
 
@@ -22,8 +22,8 @@ $empty-color: rgb(181, 175, 163);
 }
 
 @font-face {
-    font-family: 'Digital-7';
-    src: url('./fonts/digital-7.ttf');
+    font-family: "Digital-7";
+    src: url("./fonts/digital-7.ttf");
 }
 
 * {
@@ -89,13 +89,12 @@ input::-webkit-inner-spin-button {
     height: auto;
     border: 0.2rem solid black;
     position: fixed;
-    display: none; //change back to none
+    display: none;
     top: 50%;
     left: 3%;
     transform: translateY(-50%);
     padding: 2.5rem;
     border-radius: 1rem;
-    // background-color: rgb(228, 220, 209); // might change
 
     .editor-buttons-container {
         height: 100%;
@@ -131,7 +130,7 @@ input::-webkit-inner-spin-button {
         border-radius: 0.4rem;
         background-color: #fff;
     }
-    
+
     input {
         margin-top: 0.75rem;
         margin-left: 0.65rem;
@@ -155,7 +154,6 @@ input::-webkit-inner-spin-button {
 }
 
 .screen-outline {
-    /* height: 100%; */
     padding: 1.5rem 2rem;
     background-color: rgb(55, 61, 63);
     height: auto;
@@ -181,7 +179,7 @@ input::-webkit-inner-spin-button {
 }
 
 .update {
-    @include calculator-button($update-button-color, $update-button-shadow-color)
+    @include calculator-button($update-button-color, $update-button-shadow-color);
 }
 
 .empty {
@@ -193,7 +191,7 @@ input::-webkit-inner-spin-button {
 }
 
 #result {
-    font-family: 'Digital-7';
+    font-family: "Digital-7";
     text-align: right;
     font-size: 6.5rem;
     padding: 0.5rem 0 0 0;
@@ -225,7 +223,7 @@ input::-webkit-inner-spin-button {
     button {
         font-size: 3rem;
         display: flex;
-        margin: 0 auto 3rem ;
+        margin: 0 auto 3rem;
         padding: 1.25rem;
     }
 
