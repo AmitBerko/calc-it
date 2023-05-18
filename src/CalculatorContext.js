@@ -5,12 +5,17 @@ const CalculatorContext = React.createContext()
 
 const CalculatorProvider = ({ children }) => {
     // Define the states
-    const [moves, setMoves] = useState(0)
-    const [goal, setGoal] = useState(0)
-    const [result, setResult] = useState(0)
-    const [initialMoves, setInitialMoves] = useState(0)
-    const [initialResult, setInitialResult] = useState(0)
-    const [initialGoal, setInitialGoal] = useState(0)
+    const [levelSettings, setLevelSettings] = useState({
+        moves: 0,
+        result: 0,
+        goal: 0,
+    })
+
+    const [initialLevelSettings, setInitialLevelSettings] = useState({
+        moves: 0,
+        result: 0,
+        goal: 0,
+    })
     const [buttons, setButtons] = useState([
         { id: 0, type: 'emptyButton' },
         { id: 1, type: 'emptyButton' },
@@ -30,36 +35,27 @@ const CalculatorProvider = ({ children }) => {
         const goal = parseInt(document.getElementById('goal-input').value)
 
         // Handle invalid input cases
-        if (goal === result || moves === 0 || isNaN(moves) || isNaN(result) || isNaN(goal)) {
-            setResult('Bad Input')
+        if (goal == result || moves == 0 || isNaN(moves) || isNaN(result) || isNaN(goal)) {
+            setLevelSettings(prevSettings => ({
+                ...prevSettings,
+                result: 'bad input'
+            }))
             return
         }
 
         // Update the state variables with the new values
-        setMoves(moves)
-        setResult(result)
-        setGoal(goal)
-        setInitialMoves(moves)
-        setInitialResult(result)
-        setInitialGoal(goal)
+        setLevelSettings({ moves: moves, result: result, goal: goal })
+        setInitialLevelSettings({ moves: moves, result: result, goal: goal })
     }
 
     return (
         // Provide the state variables and setters through the context
         <CalculatorContext.Provider
             value={{
-                moves,
-                setMoves,
-                goal,
-                setGoal,
-                result,
-                setResult,
-                initialMoves,
-                setInitialMoves,
-                initialResult,
-                setInitialResult,
-                initialGoal,
-                setInitialGoal,
+                levelSettings,
+                setLevelSettings,
+                initialLevelSettings,
+                setInitialLevelSettings,
                 buttons,
                 setButtons,
             }}

@@ -5,59 +5,59 @@ function CalculatorButton({ ...props }) {
 
     // Destructure values from context
     const {
-        moves,
-        setMoves,
-        goal,
-        result,
-        setResult,
+        levelSettings,
+        setLevelSettings,
+        initialLevelSettings,
         setButtons,
-        initialMoves,
-        initialResult
     } = useContext(CalculatorContext)
 
     // Destructure props
-    let { type, operator, value, specialType, power, transformFrom, transformTo } = props
 
     // Initialize variables related to the buttons
+    const { type } = props
     let className
     let content
     let onClick
 
     // Determine button type and set variables accordingly
-    if (type === 'operatorButton') {
+    if (type == 'operatorButton') {
+        const { operator, value } = props
         className = 'operator'
         content = operator + value
         onClick = handleOperator
-    } else if (type === 'clrButton') {
+    } else if (type == 'clrButton') {
         className = 'clr'
         content = 'CLR'
         onClick = handleClear
-    } else if (type === 'addDigitButton') {
+    } else if (type == 'addDigitButton') {
+        const { value } = props
         className = 'add-digit'
         content = value
         onClick = handleAddDigit
-    } else if (type === 'specialButton') {
+    } else if (type == 'specialButton') {
+        const { specialType } = props
         className = 'special'
-
-        if (specialType === 'mirror') {
+        if (specialType == 'mirror') {
             onClick = handleMirror
             content = 'Mirror'
-        } else if (specialType === 'reverse') {
+        } else if (specialType == 'reverse') {
             onClick = handleReverse
             content = 'Reverse'
-        } else if (specialType === 'sum') {
+        } else if (specialType == 'sum') {
             onClick = handleSum
             content = 'SUM'
-        } else if (specialType === 'pow') {
+        } else if (specialType == 'pow') {
+            const { power } = props
             onClick = handlePow
             content = <p style={{ transform: 'translateY(-0.325rem)' }}>X<sup>{power}</sup></p> // שייי
-        } else if (specialType === 'delete') {
+        } else if (specialType == 'delete') {
             onClick = handleDelete
             content = '<<'
-        } else if (specialType === 'plusMinus') {
+        } else if (specialType == 'plusMinus') {
             onClick = handlePlusMinus
             content = '+/-'
-        } else if (specialType === 'transform') {
+        } else if (specialType == 'transform') {
+            const { transformFrom, transformTo } = props
             onClick = handleTransform
             content = `${transformFrom}=>${transformTo}`
         }
@@ -69,10 +69,14 @@ function CalculatorButton({ ...props }) {
 
     function canMove() {
         // If there are no moves left or the result is 'too big' or 'success', return false
-        if (moves == 0 || result == 'too big' || result == 'success')
+        if (levelSettings.moves == 0 || levelSettings.result == 'too big'
+            || levelSettings.result == 'success')
             return false
         // Decrement the moves and return true
-        setMoves(prevMoves => prevMoves - 1)
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            moves: levelSettings.moves - 1,
+        }))
         return true
     }
 
@@ -97,105 +101,154 @@ function CalculatorButton({ ...props }) {
 
     function handleClear() {
         // Reset the result and moves to their initial values
-        setResult(initialResult)
-        setMoves(initialMoves)
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: initialLevelSettings.result,
+            moves: initialLevelSettings.moves,
+        }))
     }
 
     function handleOperator() {
         // If a move cannot be made, return
         if (!canMove()) return
+
         let { operator, value } = props
         const parsedValue = parseFloat(value)
+        let newResult
+
         // Perform the appropriate operation based on the operator
-        if (operator == '+')
-            setResult(prevResult => prevResult + parsedValue)
-        else if (operator == '-')
-            setResult(prevResult => prevResult - parsedValue)
-        else if (operator == '/')
-            setResult(prevResult => parseInt(100 * prevResult / parsedValue) / 100) // Rounds 2 digits after dot
-        else if (operator == 'x')
-            setResult(prevResult => prevResult * parsedValue)
+        if (operator == '+') {
+            newResult = levelSettings.result + parsedValue
+        } else if (operator == '-') {
+            newResult = levelSettings.result - parsedValue
+        } else if (operator == '/') {
+            newResult = parseInt(100 * levelSettings.result / parsedValue) / 100 // Rounds 2 digits after dot
+        } else if (operator == 'x') {
+            newResult = levelSettings.result * parsedValue
+        }
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: newResult,
+        }))
     }
 
     function handleAddDigit() {
         // If a move cannot be made, return
         if (!canMove()) return
+
         let { value } = props
+
         // Add a certain digit to the result
-        setResult(prevResult => parseInt(prevResult + value.toString()))
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: parseInt(levelSettings.result + value.toString())
+        }))
     }
 
-    // Function for handling Special Buttons
     function handleReverse() {
         // If a move cannot be made, return
         if (!canMove()) return
-        setResult((prevResult) => {
-            return parseInt(prevResult.toString().split('').reverse().join(''))
-        })
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: parseInt(levelSettings.result.toString().split('').reverse().join(''))
+        }))
     }
 
     function handleSum() {
         // If a move cannot be made, return
         if (!canMove()) return
-        let temp = Math.abs(result), sum = 0
+
+        let temp = Math.abs(levelSettings.result)
+        let sum = 0
+
         // Compute the sum of the digits of the result
         while (temp > 0) {
             sum += temp % 10
             temp = Math.floor(temp / 10)
         }
-        setResult(sum)
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: sum
+        }))
     }
+
 
     function handleMirror() {
         // If a move cannot be made, return
         if (!canMove()) return
-        let temp = Math.abs(result)
+
+        let temp = Math.abs(levelSettings.result)
         let newResult = temp
+
         // Add a reversed result to the current result (for example, 123 should turn into 123321)
         while (temp > 0) {
             newResult = newResult * 10 + temp % 10
             temp = Math.floor(temp / 10)
         }
-        setResult(result > 0 ? newResult : -newResult)
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: levelSettings.result > 0 ? newResult : -newResult
+        }))
     }
+
 
     function handlePow() {
         // If a move cannot be made, return
         if (!canMove()) return
+
         let { power } = props
-        setResult((prevResult) => {
-            // Raise the result to the power chosen by the user
-            return Math.pow(prevResult, power) 
-        })
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: Math.pow(prevSettings.result, power)
+        }))
     }
 
     
     function handleDelete() {
         // If a move cannot be made, return
         if (!canMove()) return
-        setResult((prevResult) => {
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
             // remove the last digit from the result.
-            return parseInt(prevResult / 10)
-        })
+            result: parseInt(prevSettings.result / 10)
+        }))
     }
 
     function handlePlusMinus() {
         // If a move cannot be made, return
         if (!canMove()) return
-        setResult((prevResult) => -prevResult) // Negate the previous result
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: -prevSettings.result
+        }))
     }
 
     function handleTransform() {
         // If a move cannot be made, return
         if (!canMove()) return
+
         let { transformFrom, transformTo } = props
-        // Turn all transformFrom values, to the transformTo value in the result
-        setResult(parseInt(result.toString().replaceAll(transformFrom, transformTo)))
+
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: parseInt(prevSettings.result.toString().replaceAll(transformFrom, transformTo))
+        }))
     }
 
-    if (result == goal && initialResult != result) {
+    if (levelSettings.result == levelSettings.goal &&
+        initialLevelSettings.result != levelSettings.result) {
         setTimeout(() => {
-            setResult('success')
+            setLevelSettings(prevSettings => ({
+                ...prevSettings,
+                result: 'success'
+            }))
         }, 500)
     }
 
@@ -216,8 +269,13 @@ function CalculatorButton({ ...props }) {
         })
     }
 
-    if (result >= 1000000)
-        setResult('too big')
+    if (levelSettings.result >= 1000000) {
+        setLevelSettings(prevSettings => ({
+            ...prevSettings,
+            result: 'too big'
+        }))
+    }
+
 
     return (
         <button 

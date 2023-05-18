@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import '../styles.scss'
 import EditButton from '../components/EditButton'
 import CalculatorButton from '../components/CalculatorButton'
@@ -6,9 +6,7 @@ import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorPage() {
     const {
-        moves,
-        goal,
-        result,
+        levelSettings,
         buttons,
     } = useContext(CalculatorContext)
 
@@ -83,10 +81,10 @@ function CalculatorPage() {
                 <div className="screen-outline">
                     <div className="screen">
                         <div className="level-info">
-                            <div id="moves">MOVES: {moves}</div>
-                            <div id="goal">GOAL: {goal}</div>
+                            <div id="moves">MOVES: {levelSettings.moves}</div>
+                            <div id="goal">GOAL: {levelSettings.goal}</div>
                         </div>
-                        <div id="result">{result}</div>
+                        <div id="result">{levelSettings.result}</div>
                     </div>
                 </div>
                 <div className="buttons-container">
