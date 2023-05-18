@@ -5,7 +5,7 @@ import { CalculatorContext } from '../CalculatorContext'
 function EditButton({ ...props }) {
     const { buttons, setButtons } = useContext(CalculatorContext)
     let selectedEmptyId
-    let type = props.type
+    let { type } = props
     let className
     let content
     let onClick
