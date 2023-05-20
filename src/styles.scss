@@ -10,6 +10,11 @@ $update-button-color: rgb(61, 142, 41);
 $update-button-shadow-color: rgb(45, 104, 28);
 $empty-color: rgb(181, 175, 163);
 
+.test {
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
 @mixin calculator-button($color, $shadow-color) {
     transition: all 0.15s ease;
     background-color: $color;
@@ -115,6 +120,10 @@ input::-webkit-inner-spin-button {
 
 .hidden {
     display: none;
+}
+
+.no-pointer {
+    cursor: default;
 }
 
 #inputs {

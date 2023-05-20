@@ -2,16 +2,14 @@ import React, { useContext } from 'react'
 import { CalculatorContext } from '../CalculatorContext'
 
 function CalculatorButton({ ...props }) {
-
     // Destructure values from context
     const {
         levelSettings,
         setLevelSettings,
         initialLevelSettings,
         setButtons,
+        isPlayMode,
     } = useContext(CalculatorContext)
-
-    // Destructure props
 
     // Initialize variables related to the buttons
     const { type } = props
@@ -88,7 +86,9 @@ function CalculatorButton({ ...props }) {
         var lastSelected = document.querySelector('.selected')
         // Add the 'selected' class to the button and show the editor
         button.classList.add('selected')
-        editor.style.display = 'grid'
+        if (!isPlayMode) {
+            editor.style.display = 'grid'
+        }
         // If the button is the last selected button, remove the 'selected' class and hide the editor
         if (button == lastSelected) {
             button.classList.remove('selected')
@@ -150,9 +150,10 @@ function CalculatorButton({ ...props }) {
         // If a move cannot be made, return
         if (!canMove()) return
 
+        let newResult = parseInt(levelSettings.result.toString().split('').reverse().join(''))
         setLevelSettings(prevSettings => ({
             ...prevSettings,
-            result: parseInt(levelSettings.result.toString().split('').reverse().join(''))
+            result: levelSettings.result >= 0 ? newResult : -newResult,
         }))
     }
 
@@ -175,7 +176,6 @@ function CalculatorButton({ ...props }) {
         }))
     }
 
-
     function handleMirror() {
         // If a move cannot be made, return
         if (!canMove()) return
@@ -195,7 +195,6 @@ function CalculatorButton({ ...props }) {
         }))
     }
 
-
     function handlePow() {
         // If a move cannot be made, return
         if (!canMove()) return
@@ -207,7 +206,6 @@ function CalculatorButton({ ...props }) {
             result: Math.pow(prevSettings.result, power)
         }))
     }
-
     
     function handleDelete() {
         // If a move cannot be made, return
@@ -276,6 +274,13 @@ function CalculatorButton({ ...props }) {
         }))
     }
 
+    if (isPlayMode)
+        handleContextMenu = null
+
+    if (isPlayMode && className == 'empty') {
+        onClick = null
+        className = className + ' no-pointer'
+    }
 
     return (
         <button 

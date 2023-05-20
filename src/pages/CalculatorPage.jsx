@@ -1,4 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import '../styles.scss'
 import EditButton from '../components/EditButton'
 import CalculatorButton from '../components/CalculatorButton'
@@ -7,9 +9,35 @@ import { CalculatorContext } from '../CalculatorContext'
 function CalculatorPage() {
     const {
         levelSettings,
+        setLevelSettings,
+        initialLevelSettings,
+        setInitialLevelSettings,
         buttons,
+        setButtons,
+        isPlayMode,
+        setIsPlayMode,
     } = useContext(CalculatorContext)
 
+    const { levelId } = useParams()
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`/levelsapi/${levelId}`);
+            const levelData = response.data;
+            if (!levelData) return
+            setButtons(levelData.buttons)
+            setInitialLevelSettings(levelData.initialLevelSettings)
+            setLevelSettings(levelData.initialLevelSettings)
+            setIsPlayMode(true)
+        } catch (error) {
+            console.log(`Error: ${error}`)
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [levelId])
+    
     const editorButtons = [
         { id: 0, type: 'operatorButton' },
         { id: 1, type: 'addDigitButton' },
@@ -22,8 +50,35 @@ function CalculatorPage() {
         { id: 8, type: 'specialButton', specialType: 'pow' },
     ]
 
+    async function saveLevel() {
+        try {
+            const response = await axios.post('/levelsapi', {
+                buttons: buttons,
+                initialLevelSettings: initialLevelSettings,
+            })
+            // const levelId = response.data.levelId
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function loadLevel(levelId) {
+        try {
+            const response = await axios.get(`/levelsapi/${levelId}`);
+            console.log(response)
+            const levelData = JSON.parse(JSON.stringify(response.data));
+            if (!levelData) return // If level doesn't exist, return
+            setButtons(levelData.buttons)
+            setInitialLevelSettings(levelData.initialLevelSettings)
+            setLevelSettings(levelData.initialLevelSettings)
+        } catch (error) {
+            console.log(`Error: ${error}`)
+        }
+    }
+
     return (
         <>
+        {!isPlayMode &&
             <div className="editor-container">
                 <div className="editor-buttons-container">
                     {editorButtons.map(button => {
@@ -76,7 +131,7 @@ function CalculatorPage() {
                     </div>
                 </div>
             </div>
-
+        }
             <div className="calculator-container">
                 <div className="screen-outline">
                     <div className="screen">
@@ -93,6 +148,17 @@ function CalculatorPage() {
                     })}
                 </div>
             </div>
+            <button className="update test" onClick={() => {
+                setIsPlayMode(!isPlayMode)
+            }}>asdasd</button>
+            <p>play mode: {isPlayMode.toString()}</p>
+
+            <button className="update test" onClick={saveLevel}>save level</button>
+            <button 
+            className="update test" 
+            onClick={() => loadLevel(parseInt(document.getElementById('testInput').value))}
+            >load level</button>
+            <input id="testInput"></input>
         </>
     )
 }

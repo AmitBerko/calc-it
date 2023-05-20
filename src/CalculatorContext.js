@@ -16,6 +16,7 @@ const CalculatorProvider = ({ children }) => {
         result: 0,
         goal: 0,
     })
+
     const [buttons, setButtons] = useState([
         { id: 0, type: 'emptyButton' },
         { id: 1, type: 'emptyButton' },
@@ -28,6 +29,7 @@ const CalculatorProvider = ({ children }) => {
         { id: 8, type: 'emptyButton' },
     ])
 
+    const [isPlayMode, setIsPlayMode] = useState(false)
     // Function to update the initial values based on user input
     const updateInitialValues = () => {
         const moves = parseInt(document.getElementById('initial-moves').value)
@@ -58,8 +60,11 @@ const CalculatorProvider = ({ children }) => {
                 setInitialLevelSettings,
                 buttons,
                 setButtons,
+                isPlayMode,
+                setIsPlayMode,
             }}
         >
+        {!isPlayMode && 
             <div className="inputs-container">
                 <h1>Level Settings</h1>
                 <div className="input-group">
@@ -78,6 +83,7 @@ const CalculatorProvider = ({ children }) => {
                     Update
                 </button>
             </div>
+        }
             {children}
         </CalculatorContext.Provider>
     )
