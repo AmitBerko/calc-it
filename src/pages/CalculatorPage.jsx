@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import '../styles.scss'
 import EditButton from '../components/EditButton'
 import CalculatorButton from '../components/CalculatorButton'
 import { CalculatorContext } from '../CalculatorContext'
+import { db } from '../config/firebase'
+import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
 
 function CalculatorPage() {
     const {
@@ -20,24 +21,34 @@ function CalculatorPage() {
 
     const { levelId } = useParams()
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`/levelsapi/${levelId}`);
-            const levelData = response.data;
-            if (!levelData) return
-            setButtons(levelData.buttons)
-            setInitialLevelSettings(levelData.initialLevelSettings)
-            setLevelSettings(levelData.initialLevelSettings)
-            setIsPlayMode(true)
-        } catch (error) {
-            console.log(`Error: ${error}`)
-        }
-    }
+    const levelsRef = collection(db, 'levels')
 
     useEffect(() => {
-        fetchData()
+        const loadLevel = async () => {
+            try {
+                if (!levelId) return
+                const data = await getDocs(levelsRef)
+                const levels = data.docs.map((doc) => {
+                    return { id: doc.id.slice(0, 5), ...doc.data() }
+                })
+                const levelToLoad = levels.find((level) => {
+                    return level.id == levelId
+                })
+                if (!levelToLoad) {
+                    window.location.href = '/'
+                    return
+                }
+                setButtons(levelToLoad.buttons)
+                setLevelSettings(levelToLoad.initialLevelSettings)
+                setInitialLevelSettings(levelToLoad.initialLevelSettings)
+                setIsPlayMode(true)
+            } catch (error) {
+                console.log(`error: ${error}`)
+            }
+        }
+        loadLevel()
     }, [levelId])
-    
+
     const editorButtons = [
         { id: 0, type: 'operatorButton' },
         { id: 1, type: 'addDigitButton' },
@@ -52,86 +63,74 @@ function CalculatorPage() {
 
     async function saveLevel() {
         try {
-            const response = await axios.post('/levelsapi', {
-                buttons: buttons,
-                initialLevelSettings: initialLevelSettings,
-            })
-            // const levelId = response.data.levelId
+            const levelData = { id: null, buttons, initialLevelSettings }
+            await addDoc(levelsRef, levelData)
+                .then((docRef) => {
+                    const id = docRef.id.slice(0, 5)
+                    updateDoc(docRef, { id: id, ...docRef.data })
+                    alert(`${window.location.hostname}/${id}`)
+                })
         } catch (error) {
-            console.log(error)
-        }
-    }
-
-    async function loadLevel(levelId) {
-        try {
-            const response = await axios.get(`/levelsapi/${levelId}`);
-            console.log(response)
-            const levelData = JSON.parse(JSON.stringify(response.data));
-            if (!levelData) return // If level doesn't exist, return
-            setButtons(levelData.buttons)
-            setInitialLevelSettings(levelData.initialLevelSettings)
-            setLevelSettings(levelData.initialLevelSettings)
-        } catch (error) {
-            console.log(`Error: ${error}`)
+            console.log(`error: ${error}`)
         }
     }
 
     return (
         <>
-        {!isPlayMode &&
-            <div className="editor-container">
-                <div className="editor-buttons-container">
-                    {editorButtons.map(button => {
-                        return <EditButton key={button.id} {...editorButtons[button.id]}></EditButton>
-                    })}
+            {!isPlayMode &&
+                <div className="editor-container">
+                    <div className="editor-buttons-container">
+                        {editorButtons.map(button => {
+                            return <EditButton key={button.id} {...editorButtons[button.id]}></EditButton>
+                        })}
+                    </div>
+                    <div id="inputs">
+                        <div className="hidden" id="operator-container">
+                            <label>Operator:</label>
+                            <select id="operator-input">
+                                <option value=""></option>
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                                <option value="x">x</option>
+                                <option value="/">/</option>
+                            </select>
+                            <br></br>
+                            <label htmlFor="operator-value-input">Value:</label>
+                            <input
+                                type="number"
+                                id="operator-value-input"
+                            />
+                        </div>
+                        <div className="hidden" id="add-digit-container">
+                            <label htmlFor="add-digit-input">Value:</label>
+                            <input
+                                type="number"
+                                id="add-digit-input"
+                            />
+                        </div>
+                        <div className="hidden" id="transform-container">
+                            <label htmlFor="transform-from-input">From:</label>
+                            <input
+                                type="number"
+                                id="transform-from-input"
+                            />
+                            <br></br>
+                            <label htmlFor="transform-to-input">To:</label>
+                            <input
+                                type="number"
+                                id="transform-to-input"
+                            />
+                        </div>
+                        <div className="hidden" id="pow-container">
+                            <label htmlFor="pow-input">Value:</label>
+                            <input
+                                type="number"
+                                id="pow-input"
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div id="inputs">
-                    <div className="hidden" id="operator-container">
-                        <label>Operator:</label>
-                        <select id="operator-input">
-                            <option value=""></option>
-                            <option value="+">+</option>
-                            <option value="-">-</option>
-                            <option value="x">x</option>
-                            <option value="/">/</option>
-                        </select>
-                        <br></br>
-                        <label htmlFor="operator-value-input">Value:</label>
-                        <input
-                            type="number"
-                            id="operator-value-input"
-                        />
-                    </div>
-                    <div className="hidden" id="add-digit-container">
-                        <label htmlFor="add-digit-input">Value:</label>
-                        <input
-                            type="number"
-                            id="add-digit-input"
-                        />
-                    </div>
-                    <div className="hidden" id="transform-container">
-                        <label htmlFor="transform-from-input">From:</label>
-                        <input
-                            type="number"
-                            id="transform-from-input"
-                        />
-                        <br></br>
-                        <label htmlFor="transform-to-input">To:</label>
-                        <input
-                            type="number"
-                            id="transform-to-input"
-                        />
-                    </div>
-                    <div className="hidden" id="pow-container">
-                        <label htmlFor="pow-input">Value:</label>
-                        <input
-                            type="number"
-                            id="pow-input"
-                        />
-                    </div>
-                </div>
-            </div>
-        }
+            }
             <div className="calculator-container">
                 <div className="screen-outline">
                     <div className="screen">
@@ -148,17 +147,7 @@ function CalculatorPage() {
                     })}
                 </div>
             </div>
-            <button className="update test" onClick={() => {
-                setIsPlayMode(!isPlayMode)
-            }}>asdasd</button>
-            <p>play mode: {isPlayMode.toString()}</p>
-
-            <button className="update test" onClick={saveLevel}>save level</button>
-            <button 
-            className="update test" 
-            onClick={() => loadLevel(parseInt(document.getElementById('testInput').value))}
-            >load level</button>
-            <input id="testInput"></input>
+            {!isPlayMode && <button className="update test" onClick={saveLevel}>save level</button>}
         </>
     )
 }

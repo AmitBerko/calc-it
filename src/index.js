@@ -11,7 +11,7 @@ root.render(
             <React.StrictMode>
                 <Routes>
                     <Route path="/" element={<CalculatorPage />} />
-                    <Route path="/levels/:levelId" element={<CalculatorPage />} />
+                    <Route path="/:levelId" element={<CalculatorPage />} />
                 </Routes>
             </React.StrictMode>
         </CalculatorProvider>

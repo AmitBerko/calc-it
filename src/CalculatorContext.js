@@ -64,26 +64,26 @@ const CalculatorProvider = ({ children }) => {
                 setIsPlayMode,
             }}
         >
-        {!isPlayMode && 
-            <div className="inputs-container">
-                <h1>Level Settings</h1>
-                <div className="input-group">
-                    <label htmlFor="initial-moves">Initial Moves:</label>
-                    <input type="number" id="initial-moves" />
+            {!isPlayMode &&
+                <div className="inputs-container">
+                    <h1>Level Settings</h1>
+                    <div className="input-group">
+                        <label htmlFor="initial-moves">Initial Moves:</label>
+                        <input type="number" id="initial-moves" />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="initial-result">Initial Result:</label>
+                        <input type="number" id="initial-result" />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="goal-input">Goal:</label>
+                        <input type="number" id="goal-input" />
+                    </div>
+                    <button className="update" onClick={updateInitialValues}>
+                        Update
+                    </button>
                 </div>
-                <div className="input-group">
-                    <label htmlFor="initial-result">Initial Result:</label>
-                    <input type="number" id="initial-result" />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="goal-input">Goal:</label>
-                    <input type="number" id="goal-input" />
-                </div>
-                <button className="update" onClick={updateInitialValues}>
-                    Update
-                </button>
-            </div>
-        }
+            }
             {children}
         </CalculatorContext.Provider>
     )
