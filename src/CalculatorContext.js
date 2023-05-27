@@ -30,6 +30,8 @@ const CalculatorProvider = ({ children }) => {
     ])
 
     const [isPlayMode, setIsPlayMode] = useState(false)
+    const [hasLoaded, setHasLoaded] = useState(false)
+
     // Function to update the initial values based on user input
     const updateInitialValues = () => {
         const moves = parseInt(document.getElementById('initial-moves').value)
@@ -62,9 +64,11 @@ const CalculatorProvider = ({ children }) => {
                 setButtons,
                 isPlayMode,
                 setIsPlayMode,
+                hasLoaded,
+                setHasLoaded,
             }}
         >
-            {!isPlayMode &&
+            {!isPlayMode && hasLoaded &&
                 <div className="inputs-container">
                     <h1>Level Settings</h1>
                     <div className="input-group">

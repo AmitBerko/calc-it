@@ -17,6 +17,8 @@ function CalculatorPage() {
         setButtons,
         isPlayMode,
         setIsPlayMode,
+        hasLoaded,
+        setHasLoaded,
     } = useContext(CalculatorContext)
 
     const { levelId } = useParams()
@@ -26,7 +28,10 @@ function CalculatorPage() {
     useEffect(() => {
         const loadLevel = async () => {
             try {
-                if (!levelId) return
+                if (!levelId) {
+                    setHasLoaded(true)
+                    return
+                }
                 const data = await getDocs(levelsRef)
                 const levels = data.docs.map((doc) => {
                     return { id: doc.id.slice(0, 5), ...doc.data() }
@@ -36,12 +41,14 @@ function CalculatorPage() {
                 })
                 if (!levelToLoad) {
                     window.location.href = '/'
+                    setHasLoaded(true)
                     return
                 }
                 setButtons(levelToLoad.buttons)
                 setLevelSettings(levelToLoad.initialLevelSettings)
                 setInitialLevelSettings(levelToLoad.initialLevelSettings)
                 setIsPlayMode(true)
+                setHasLoaded(true)
             } catch (error) {
                 console.log(`error: ${error}`)
             }
@@ -131,7 +138,7 @@ function CalculatorPage() {
                     </div>
                 </div>
             }
-            <div className="calculator-container">
+            {hasLoaded && <div className="calculator-container">
                 <div className="screen-outline">
                     <div className="screen">
                         <div className="level-info">
@@ -146,8 +153,8 @@ function CalculatorPage() {
                         return <CalculatorButton key={button.id} {...buttons[button.id]} />
                     })}
                 </div>
-            </div>
-            {!isPlayMode && <button className="update test" onClick={saveLevel}>save level</button>}
+            </div>}
+            {!isPlayMode && hasLoaded && <button className="update test" onClick={saveLevel}>save level</button>}
         </>
     )
 }
