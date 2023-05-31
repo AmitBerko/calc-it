@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { db } from './config/firebase'
+import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
+import { useParams } from 'react-router-dom'
 
 // Create a new context for the calculator
 const CalculatorContext = React.createContext()
@@ -31,6 +34,9 @@ const CalculatorProvider = ({ children }) => {
 
     const [isPlayMode, setIsPlayMode] = useState(false)
     const [hasLoaded, setHasLoaded] = useState(false)
+    const { levelId } = useParams()
+    const levelsRef = collection(db, 'levels')
+    // alert(levelId)
 
     // Function to update the initial values based on user input
     const updateInitialValues = () => {
@@ -50,6 +56,20 @@ const CalculatorProvider = ({ children }) => {
         // Update the state variables with the new values
         setLevelSettings({ moves: moves, result: result, goal: goal })
         setInitialLevelSettings({ moves: moves, result: result, goal: goal })
+    }
+
+    async function saveLevel() {
+        try {
+            const levelData = { id: null, buttons, initialLevelSettings }
+            await addDoc(levelsRef, levelData)
+                .then((docRef) => {
+                    const id = docRef.id.slice(0, 5)
+                    updateDoc(docRef, { id: id, ...docRef.data })
+                    alert(`${window.location.hostname}/${id}`)
+                })
+        } catch (error) {
+            console.log(`error: ${error}`)
+        }
     }
 
     return (
@@ -83,9 +103,14 @@ const CalculatorProvider = ({ children }) => {
                         <label htmlFor="goal-input">Goal:</label>
                         <input type="number" id="goal-input" />
                     </div>
-                    <button className="update" onClick={updateInitialValues}>
-                        Update
-                    </button>
+                    <div className="buttons-container">
+                        <button className="misc" onClick={updateInitialValues}>
+                            Update Settings
+                        </button>
+                        <button className="misc" onClick={saveLevel}>
+                            Upload Level
+                        </button>
+                    </div>
                 </div>
             }
             {children}

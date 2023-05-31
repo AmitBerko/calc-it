@@ -32,7 +32,8 @@ $empty-color: rgb(181, 175, 163);
 }
 
 * {
-    font-family: sans-serif;
+    // outline: 1px solid red;
+    font-family: 'Rubik', sans-serif;
     user-select: none;
 }
 
@@ -187,8 +188,11 @@ input::-webkit-inner-spin-button {
     @include calculator-button($add-digit-color, $add-digit-shadow-color);
 }
 
-.update {
+.misc {
     @include calculator-button($update-button-color, $update-button-shadow-color);
+    padding: 1rem !important;
+    margin: 0 0.5rem 1.5rem 0.5rem !important;
+    font-size: 2rem !important;
 }
 
 .empty {
@@ -223,17 +227,18 @@ input::-webkit-inner-spin-button {
 
 .inputs-container {
     border: 0.2rem solid black;
+    padding: 1.4rem;
     position: fixed;
     top: 50%;
     right: 0;
-    transform: translate(-16%, -50%);
+    transform: translate(0, -50%);
+    margin-right: 3rem;
     border-radius: 1rem;
 
     button {
-        font-size: 3rem;
         display: flex;
         margin: 0 auto 3rem;
-        padding: 1.25rem;
+        display: inline-block;
     }
 
     h1 {
@@ -263,5 +268,11 @@ input::-webkit-inner-spin-button {
             border-radius: 0.5rem;
             border: 2px solid #ccc;
         }
+    }
+    
+    .buttons-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
 }

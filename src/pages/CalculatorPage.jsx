@@ -68,20 +68,6 @@ function CalculatorPage() {
         { id: 8, type: 'specialButton', specialType: 'pow' },
     ]
 
-    async function saveLevel() {
-        try {
-            const levelData = { id: null, buttons, initialLevelSettings }
-            await addDoc(levelsRef, levelData)
-                .then((docRef) => {
-                    const id = docRef.id.slice(0, 5)
-                    updateDoc(docRef, { id: id, ...docRef.data })
-                    alert(`${window.location.hostname}/${id}`)
-                })
-        } catch (error) {
-            console.log(`error: ${error}`)
-        }
-    }
-
     return (
         <>
             {!isPlayMode &&
@@ -154,7 +140,6 @@ function CalculatorPage() {
                     })}
                 </div>
             </div>}
-            {!isPlayMode && hasLoaded && <button className="update test" onClick={saveLevel}>save level</button>}
         </>
     )
 }
