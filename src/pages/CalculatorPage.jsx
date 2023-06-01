@@ -8,10 +8,10 @@ import { db } from '../config/firebase'
 import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
 
 function CalculatorPage() {
+    // Destructuring values from the CalculatorContext
     const {
         levelSettings,
         setLevelSettings,
-        initialLevelSettings,
         setInitialLevelSettings,
         buttons,
         setButtons,
@@ -21,29 +21,40 @@ function CalculatorPage() {
         setHasLoaded,
     } = useContext(CalculatorContext)
 
+    // Extracting levelId from the URL parameters
     const { levelId } = useParams()
 
+    // Reference to the 'levels' collection in the database
     const levelsRef = collection(db, 'levels')
 
     useEffect(() => {
         const loadLevel = async () => {
             try {
+                // Handle empty level id
                 if (!levelId) {
                     setHasLoaded(true)
                     return
                 }
+
+                // Retrieve all level documents from the 'levels' collection
                 const data = await getDocs(levelsRef)
+
+                // Map the retrieved documents to extract necessary data
                 const levels = data.docs.map((doc) => {
                     return { id: doc.id.slice(0, 5), ...doc.data() }
                 })
-                const levelToLoad = levels.find((level) => {
-                    return level.id == levelId
-                })
+
+                // Find the level to load based on the levelId
+                const levelToLoad = levels.find((level) => level.id == levelId)
+
+                // If the level to load is not found, redirect to the home page
                 if (!levelToLoad) {
                     window.location.href = '/'
                     setHasLoaded(true)
                     return
                 }
+
+                // Update the buttons, levelSettings, and initialLevelSettings based on the loaded level
                 setButtons(levelToLoad.buttons)
                 setLevelSettings(levelToLoad.initialLevelSettings)
                 setInitialLevelSettings(levelToLoad.initialLevelSettings)
@@ -53,9 +64,12 @@ function CalculatorPage() {
                 console.log(`error: ${error}`)
             }
         }
+
+        // Call the loadLevel function when the component mounts or when levelId changes
         loadLevel()
     }, [levelId])
 
+    // Editor buttons configuration
     const editorButtons = [
         { id: 0, type: 'operatorButton' },
         { id: 1, type: 'addDigitButton' },
