@@ -4,3 +4,4 @@ styles.css.map
 build
 .firebase/
 firebase.json
+.firebaserc
