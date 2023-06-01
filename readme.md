@@ -117,4 +117,4 @@ Explore these level examples created using the Calculator The Game Editor:
 
 2. **Medium Level:** [calcit.pro/MXmrf](https://calcit.pro/MXmrf) - Moderate challenge requiring strategic thinking.
 
-3. **Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with intricate calculations and complex solutions.
+3. **Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with a tricky solution.
