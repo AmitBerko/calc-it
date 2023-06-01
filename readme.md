@@ -1,6 +1,6 @@
-# Calculator The Game Editor <img src="https://play-lh.googleusercontent.com/pMnvB-u74E-yX0IzEJG5O546vIRmZDUV5ZZVHG_Xwv3f_Gb-XaYQCU1yEi-yqU7K2Gw=w240-h480-rw" alt="Calculator The Game Editor" style="width: 50px; height: 50px; margin-bottom: -15px; margin-left: 10px">
+# Calculator The Game Editor <img src="https://play-lh.googleusercontent.com/pMnvB-u74E-yX0IzEJG5O546vIRmZDUV5ZZVHG_Xwv3f_Gb-XaYQCU1yEi-yqU7K2Gw=w240-h480-rw" alt="Calculator The Game Editor" style="width: 50px; height: 50px; margin-bottom: -13px; margin-left: 10px">
 
-Calculator The Game Editor is a web application that allows you to create levels for the popular puzzle game "Calculator The Game." With this editor, you can unleash your creativity and design challenging levels to share with the community.
+Calculator The Game Editor is a web application that allows you to create levels for the popular puzzle game [Calculator The Game](https://play.google.com/store/apps/details?id=com.sm.calculateme&hl=en) With this editor, you can unleash your creativity and design challenging levels to share with the community.
 
 ## Table of Contents
 
