@@ -1,19 +1,26 @@
 import React, { useContext } from 'react'
 import { CalculatorContext } from '../CalculatorContext'
 
-
 function EditButton({ ...props }) {
+    // Accessing the CalculatorContext
     const { buttons, setButtons } = useContext(CalculatorContext)
-    let selectedEmptyId
+
+    // Variable declarations
     let { type } = props
+    let selectedEmptyId
     let className
     let content
     let onClick
-    const containers = ['operator-container',
+
+    // Container IDs for toggling visibility
+    const containers = [
+        'operator-container',
         'add-digit-container',
         'transform-container',
-        'pow-container']
+        'pow-container'
+    ]
 
+    // Determine button properties based on type
     if (type == 'operatorButton') {
         className = 'operator'
         content = 'OPR'
@@ -49,22 +56,31 @@ function EditButton({ ...props }) {
         }
     }
 
+    // Adds a button to the calculator
     function addButton(buttonObject) {
+        // Check if there is a selected button container
         if (!document.getElementsByClassName('selected')[0]) return
+
+        // Get the ID of the selected button container
         selectedEmptyId = parseInt(document.getElementsByClassName('selected')[0].id)
+
+        // Update the buttons state with the new button added
         setButtons(
             buttons.map(button => {
                 if (button.id == selectedEmptyId) {
                     return { id: button.id, ...buttonObject }
-                }
-                else {
+                } else {
                     return button
                 }
             })
         )
+
+        // Hide the container after adding the button
+        toggleContainers()
     }
 
-    function toggleContainers(curContainer = '') { // Keep empty to make everything hidden
+    // Toggles the visibility of containers
+    function toggleContainers(curContainer = '') {
         let container
         for (let i = 0; i < containers.length; i++) {
             if (containers[i] == curContainer) {
@@ -75,84 +91,145 @@ function EditButton({ ...props }) {
                 container.classList.add('hidden')
             }
         }
-        if (curContainer == '')
+
+        // Hide the editor container when no container is specified
+        if (curContainer == '') {
             document.getElementsByClassName('editor-container')[0].style.display = 'none'
+        }
+    }
+
+    // Clear input fields
+    function clearInputFields(...inputIds) {
+        inputIds.forEach((id) => {
+            document.getElementById(id).value = '';
+        });
     }
 
     function handleOperatorEdit() {
-        toggleContainers('operator-container')
-        let operator = document.getElementById('operator-input').value;
-        let value = parseInt(document.getElementById('operator-value-input').value);
-        if (operator == '' || isNaN(value)) return
-        let operatorButton = { type: 'operatorButton', operator: operator, value: value };
+        // Show the operator container
+        toggleContainers('operator-container');
+
+        // Get the operator and value inputs
+        const operator = document.getElementById('operator-input').value;
+        const value = parseInt(document.getElementById('operator-value-input').value);
+
+        // Validate inputs
+        if (operator == '' || isNaN(value)) return;
+
+        // Create an operator button object
+        const operatorButton = { type: 'operatorButton', operator, value };
+
+        // Add the operator button to the calculator
         addButton(operatorButton);
-        document.getElementById('operator-input').value = '';
-        document.getElementById('operator-value-input').value = '';
-        toggleContainers()
+
+        // Clear input fields
+        clearInputFields('operator-input', 'operator-value-input');
     }
 
     function handleAddDigitEdit() {
-        toggleContainers('add-digit-container')
-        let value = parseInt(document.getElementById('add-digit-input').value)
-        if (isNaN(value)) return
-        let addDigitButton = { type: 'addDigitButton', value: value };
+        // Show the add digit container
+        toggleContainers('add-digit-container');
+
+        // Get the value input
+        const value = parseInt(document.getElementById('add-digit-input').value);
+
+        // Validate input
+        if (isNaN(value)) return;
+
+        // Create an add digit button object
+        const addDigitButton = { type: 'addDigitButton', value };
+
+        // Add the add digit button to the calculator
         addButton(addDigitButton);
-        document.getElementById('add-digit-input').value = ''
-        toggleContainers()
+
+        // Clear input fields
+        clearInputFields('add-digit-input');
     }
 
     function handleTransformEdit() {
-        toggleContainers('transform-container')
-        let transformFrom = parseInt(document.getElementById('transform-from-input').value)
-        let transformTo = parseInt(document.getElementById('transform-to-input').value)
+        // Show the transform container
+        toggleContainers('transform-container');
 
-        if (isNaN(transformFrom) || isNaN(transformTo)) return
-        let transformButton = { type: 'specialButton', specialType: 'transform',
-            transformFrom: transformFrom, transformTo: transformTo };
+        // Get the transform inputs
+        const transformFrom = parseInt(document.getElementById('transform-from-input').value);
+        const transformTo = parseInt(document.getElementById('transform-to-input').value);
+
+        // Validate inputs
+        if (isNaN(transformFrom) || isNaN(transformTo)) return;
+
+        // Create a transform button object
+        const transformButton = {
+            type: 'specialButton',
+            specialType: 'transform',
+            transformFrom,
+            transformTo
+        };
+
+        // Add the transform button to the calculator
         addButton(transformButton);
-        document.getElementById('transform-from-input').value = ''
-        document.getElementById('transform-to-input').value = ''
-        toggleContainers()
+
+        // Clear input fields
+        clearInputFields('transform-from-input', 'transform-to-input');
     }
 
     function handlePowEdit() {
-        toggleContainers('pow-container')
-        let power = parseInt(document.getElementById('pow-input').value)
-        if (isNaN(power)) return
-        let powButton = { type: 'specialButton', specialType: 'pow', power: power }
+        // Show the pow container
+        toggleContainers('pow-container');
+
+        // Get the power input
+        const power = parseInt(document.getElementById('pow-input').value);
+
+        // Validate input
+        if (isNaN(power)) return;
+
+        // Create a pow button object
+        const powButton = { type: 'specialButton', specialType: 'pow', power };
+
+        // Add the pow button to the calculator
         addButton(powButton);
-        document.getElementById('pow-input').value = ''
-        toggleContainers()
+
+        // Clear input field
+        clearInputFields('pow-input');
     }
 
     function handleReverseEdit() {
-        toggleContainers()
-        let reverseButton = { type: 'specialButton', specialType: 'reverse' }
-        addButton(reverseButton)
+        // Create a reverse button object
+        const reverseButton = { type: 'specialButton', specialType: 'reverse' };
+
+        // Add the reverse button to the calculator
+        addButton(reverseButton);
     }
 
     function handleSumEdit() {
-        toggleContainers()
-        let sumButton = { type: 'specialButton', specialType: 'sum' }
-        addButton(sumButton)
+        // Create a sum button object
+        const sumButton = { type: 'specialButton', specialType: 'sum' };
+
+        // Add the sum button to the calculator
+        addButton(sumButton);
     }
 
     function handleMirrorEdit() {
-        toggleContainers()
-        let mirrorButton = { type: 'specialButton', specialType: 'mirror' }
-        addButton(mirrorButton)
+        // Create a mirror button object
+        const mirrorButton = { type: 'specialButton', specialType: 'mirror' };
+
+        // Add the mirror button to the calculator
+        addButton(mirrorButton);
     }
 
     function handleDeleteEdit() {
-        toggleContainers()
-        let deleteButton = { type: 'specialButton', specialType: 'delete' }
-        addButton(deleteButton)
+        // Create a delete button object
+        const deleteButton = { type: 'specialButton', specialType: 'delete' };
+
+        // Add the delete button to the calculator
+        addButton(deleteButton);
     }
 
     function handlePlusMinusEdit() {
-        toggleContainers()
-        let plusMinusButton = { type: 'specialButton', specialType: 'plusMinus' }
-        addButton(plusMinusButton)
+        // Create a plus-minus button object
+        const plusMinusButton = { type: 'specialButton', specialType: 'plusMinus' };
+
+        // Add the plus-minus button to the calculator
+        addButton(plusMinusButton);
     }
 
     return (

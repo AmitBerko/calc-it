@@ -240,6 +240,7 @@ function CalculatorButton({ ...props }) {
         }))
     }
 
+    // If the goal is met, set the result to success
     if (levelSettings.result == levelSettings.goal &&
         initialLevelSettings.result != levelSettings.result) {
         setTimeout(() => {
@@ -267,6 +268,7 @@ function CalculatorButton({ ...props }) {
         })
     }
 
+    // Deals with numbers that are too big
     if (levelSettings.result >= 1000000) {
         setLevelSettings(prevSettings => ({
             ...prevSettings,
@@ -274,9 +276,11 @@ function CalculatorButton({ ...props }) {
         }))
     }
 
+    // Disables button deleting when on play mode
     if (isPlayMode)
         handleContextMenu = null
 
+    // Disables adding buttons when on play mode
     if (isPlayMode && className == 'empty') {
         onClick = null
         className = className + ' no-pointer'
