@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import '../styles.scss'
 import EditButton from '../components/EditButton'
@@ -6,6 +6,7 @@ import CalculatorButton from '../components/CalculatorButton'
 import { CalculatorContext } from '../CalculatorContext'
 import { db } from '../config/firebase'
 import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
+import RulesContainer from '../components/RulesContainer'
 
 function CalculatorPage() {
     // Destructuring values from the CalculatorContext
@@ -17,9 +18,22 @@ function CalculatorPage() {
         setButtons,
         isPlayMode,
         setIsPlayMode,
-        hasLoaded,
-        setHasLoaded,
+        hideContainers,
+        setHideContainers
     } = useContext(CalculatorContext)
+
+    // Variables to handle rules container
+    const [showRules, setShowRules] = useState(false)
+
+    const handleShowRules = () => {
+        setShowRules(true)
+        setHideContainers(true)
+    }
+
+    const handleCloseRules = () => {
+        setShowRules(false)
+        setHideContainers(false)
+    }
 
     // Extracting levelId from the URL parameters
     const { levelId } = useParams()
@@ -32,7 +46,7 @@ function CalculatorPage() {
             try {
                 // Handle empty level id
                 if (!levelId) {
-                    setHasLoaded(true)
+                    setHideContainers(false)
                     return
                 }
 
@@ -50,7 +64,7 @@ function CalculatorPage() {
                 // If the level to load is not found, redirect to the home page
                 if (!levelToLoad) {
                     window.location.href = '/'
-                    setHasLoaded(true)
+                    setHideContainers(false)
                     return
                 }
 
@@ -59,7 +73,7 @@ function CalculatorPage() {
                 setLevelSettings(levelToLoad.initialLevelSettings)
                 setInitialLevelSettings(levelToLoad.initialLevelSettings)
                 setIsPlayMode(true)
-                setHasLoaded(true)
+                setHideContainers(false)
             } catch (error) {
                 console.log(`error: ${error}`)
             }
@@ -84,7 +98,7 @@ function CalculatorPage() {
 
     return (
         <>
-            {!isPlayMode &&
+            { !isPlayMode && !hideContainers &&
                 <div className="editor-container">
                     <div className="editor-buttons-container">
                         {editorButtons.map(button => {
@@ -138,7 +152,8 @@ function CalculatorPage() {
                     </div>
                 </div>
             }
-            {hasLoaded && <div className="calculator-container">
+            { !hideContainers && 
+            <div className="calculator-container">
                 <div className="screen-outline">
                     <div className="screen">
                         <div className="level-info">
@@ -153,7 +168,18 @@ function CalculatorPage() {
                         return <CalculatorButton key={button.id} {...buttons[button.id]} />
                     })}
                 </div>
-            </div>}
+            </div>
+            }
+
+            { !hideContainers &&
+                <svg class="info-button" viewBox="0 0 16 16" onClick={handleShowRules}>
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                </svg>
+            }
+
+
+            {showRules && <RulesContainer onClose={handleCloseRules} />}
         </>
     )
 }

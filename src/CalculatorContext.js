@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { db } from './config/firebase'
-import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
-import { useParams } from 'react-router-dom'
+import { collection, addDoc, updateDoc } from 'firebase/firestore'
 
 // Create a new context for the calculator
 const CalculatorContext = React.createContext()
@@ -33,10 +32,8 @@ const CalculatorProvider = ({ children }) => {
     ])
 
     const [isPlayMode, setIsPlayMode] = useState(false)
-    const [hasLoaded, setHasLoaded] = useState(false)
-    const { levelId } = useParams()
+    const [hideContainers, setHideContainers] = useState(true)
     const levelsRef = collection(db, 'levels')
-    // alert(levelId)
 
     // Function to update the initial values based on user input
     const updateInitialValues = () => {
@@ -84,11 +81,11 @@ const CalculatorProvider = ({ children }) => {
                 setButtons,
                 isPlayMode,
                 setIsPlayMode,
-                hasLoaded,
-                setHasLoaded,
+                hideContainers,
+                setHideContainers
             }}
         >
-            {!isPlayMode && hasLoaded &&
+            {!isPlayMode && !hideContainers &&
                 <div className="inputs-container">
                     <h1>Level Settings</h1>
                     <div className="input-group">
