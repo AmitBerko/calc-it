@@ -19,7 +19,7 @@ Calculator The Game Editor is a web application that allows you to create levels
 
 ## Usage
 
-1. **Creating a New Level:** Visit the website [calcit.pro](https://calcit.pro) to access the Calculator Editor. You will see an empty calculator interface on the main page.
+1. **Creating a New Level:** Visit the website [calcit.pro](https://calcit.pro) to access the Calculator Editor. You will see an empty calculator interface on the main page. Note: Please be aware that creating new levels is only supported on desktop and larger screen devices. On mobile phones, you can only play existing levels.
 
 2. **Editing Level Settings:** On the right side of the interface, you'll find a section where you can customize the level settings.
 
@@ -113,8 +113,12 @@ Certainly! Here's a revised version of the Level Examples section with shorter d
 
 Explore these level examples created using the Calculator The Game Editor:
 
-1. **Easy Level:** [calcit.pro/h7uA2](https://calcit.pro/h7uA2) - Beginner-friendly level with simple calculations.
+1. **Very Easy Level:** [calcit.pro/C3Se1](https://calcit.pro/C3Se1) - A very easy level suitable for beginners.
 
-2. **Medium Level:** [calcit.pro/MXmrf](https://calcit.pro/MXmrf) - Moderate challenge requiring strategic thinking.
+2. **Easy Level:** [calcit.pro/h7uA2](https://calcit.pro/h7uA2) - Beginner-friendly level with simple calculations.
 
-3. **Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with a tricky solution.
+3. **Medium Level:** [calcit.pro/MXmrf](https://calcit.pro/MXmrf) - Moderate challenge requiring strategic thinking.
+
+4. **Hard Level:** [calcit.pro/l5kGH](https://calcit.pro/l5kGH) - A difficult and confusing level
+
+5. **Very Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with a tricky solution.
