@@ -21,19 +21,17 @@ Calculator The Game Editor is a web application that allows you to create levels
 
 1. **Creating a New Level:** Visit the website [calcit.pro](https://calcit.pro) to access the Calculator Editor. You will see an empty calculator interface on the main page. Note: Please be aware that creating new levels is only supported on desktop and larger screen devices. On mobile phones, you can only play existing levels.
 
-2. **Editing Level Settings:** On the right side of the interface, you'll find a section where you can customize the level settings.
+2. **Editing Level Settings:** On the right side of the screen you will find a section where you can change the settings. Simply insert your input and click on the "Update Settings" button.
 
-3. **Adding Buttons:** To add buttons to the calculator, simply click on an empty button space. A new button menu will appear with a variety of buttons to choose from. Click on the desired button to add it to the calculator.
+3. **Adding Buttons:** To add buttons to the calculator, click on an empty button space, this will make a new button menu appear with a variety of buttons to choose from. Click on the desired button and it will be added to the calculator.
 
-4. **Handling Input Buttons:** Some buttons require input values. When you click on these buttons, instead of immediately adding them to the calculator, a new input section will open. Enter the required input and click the same button again to add it with the input value.
+4. **Handling Input Buttons:** Some buttons require input values. When you click on these buttons, instead of immediately adding them to the calculator, a new input section will open. Insert the required input and click on the same button again to add it with the input value.
 
-5. **Removing Buttons:** If you want to remove a button, right-click on it. This will remove the selected button from the calculator.
+5. **Removing Buttons:** If you want to remove a button, simply right-click on it. This will remove the selected button from the calculator.
 
 6. **Saving the Level:** Once you've finished creating the level, click on the "Save Level" button. This will generate a unique link that you can share with others. When the link is accessed, it will open the specific level you created in the Calculator Editor.
 
 ## Button Descriptions
-
-Here are the descriptions of the buttons available in the Calculator The Game Editor:
 
 1. **Number Buttons:** Clicking on a number button adds the corresponding number to the calculator's input. For instance, if the result is 123, clicking the number button "4" will change it to 1234.
 
