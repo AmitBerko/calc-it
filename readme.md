@@ -1,6 +1,6 @@
 # Calculator The Game Editor <img src="https://play-lh.googleusercontent.com/pMnvB-u74E-yX0IzEJG5O546vIRmZDUV5ZZVHG_Xwv3f_Gb-XaYQCU1yEi-yqU7K2Gw=w240-h480-rw" alt="Calculator The Game Editor" style="width: 50px; height: 50px; margin-bottom: -13px; margin-left: 10px">
 
-Calculator The Game Editor is a web application that allows you to create levels for the popular puzzle game [Calculator The Game](https://play.google.com/store/apps/details?id=com.sm.calculateme&hl=en) With this editor, you can unleash your creativity and design challenging levels to share with the community.
+Calculator The Game Editor is a web application that allows you to create levels for the popular puzzle game [Calculator The Game](https://play.google.com/store/apps/details?id=com.sm.calculateme&hl=en). With this editor, you can unleash your creativity and design challenging levels to share with the community.
 
 ## Table of Contents
 
@@ -30,12 +30,6 @@ Calculator The Game Editor is a web application that allows you to create levels
 5. **Removing Buttons:** If you want to remove a button, right-click on it. This will remove the selected button from the calculator.
 
 6. **Saving the Level:** Once you've finished creating the level, click on the "Save Level" button. This will generate a unique link that you can share with others. When the link is accessed, it will open the specific level you created in the Calculator Editor.
-
-Certainly! Here's an additional section that explains the various buttons available in the Calculator The Game Editor:
-
-Certainly! Here's a subsection that explains the special buttons available in the Calculator The Game Editor:
-
-Certainly! Here's an updated version of the button descriptions section with the explanations of the special buttons included:
 
 ## Button Descriptions
 
@@ -105,10 +99,6 @@ To install and run the Calculator The Game Editor locally, follow these steps:
 
 5. Open your browser and visit `http://localhost:3000` to access the Calculator The Game Editor.
 
-Certainly! Here's an additional section for level examples:
-
-Certainly! Here's a revised version of the Level Examples section with shorter descriptions:
-
 ## Level Examples
 
 Explore these level examples created using the Calculator The Game Editor:
@@ -119,6 +109,6 @@ Explore these level examples created using the Calculator The Game Editor:
 
 3. **Medium Level:** [calcit.pro/MXmrf](https://calcit.pro/MXmrf) - Moderate challenge requiring strategic thinking.
 
-4. **Hard Level:** [calcit.pro/l5kGH](https://calcit.pro/l5kGH) - A difficult and confusing level
+4. **Hard Level:** [calcit.pro/l5kGH](https://calcit.pro/l5kGH) - A difficult and confusing level.
 
 5. **Very Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with a tricky solution.
