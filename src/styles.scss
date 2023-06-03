@@ -316,6 +316,10 @@ input::-webkit-inner-spin-button {
         font-size: 1.25rem;
     }
 
+    * {
+        user-select: text;
+    }
+
     button {
         padding: 0.5rem 1rem;
         background-color: black;
