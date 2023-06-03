@@ -5,3 +5,4 @@ build
 .firebase/
 firebase.json
 .firebaserc
+src/config/firebase.js
