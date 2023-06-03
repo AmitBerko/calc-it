@@ -63,37 +63,37 @@ To install and run the Calculator The Game Editor locally, follow these steps:
 
 1. Clone the repository to your local machine:
 
-   ```
+   ```bash
    git clone https://github.com/your-username/calculator-the-game-editor.git
    ```
 
 2. Navigate to the project directory:
 
-   ```
+   ```bash
    cd calculator-the-game-editor
    ```
 
 3. Install the dependencies using npm or yarn:
 
-   ```
+   ```bash
    npm install
    ```
 
    or
 
-   ```
+   ```bash
    yarn install
    ```
 
 4. Start the development server:
 
-   ```
+   ```bash
    npm start
    ```
 
    or
 
-   ```
+   ```bash
    yarn start
    ```
 
