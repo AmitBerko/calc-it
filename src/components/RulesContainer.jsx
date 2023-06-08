@@ -68,7 +68,7 @@ const RulesContainer = ({ onClose }) => {
                     Raises the current number to a specified power.
                 </li>
             </ul>
-            <button onClick={onClose}>Close</button>
+            <button className="close-button" onClick={onClose}>Close</button>
         </div>
     )
 }
