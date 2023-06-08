@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { db } from './config/firebase'
 import { collection, addDoc, updateDoc } from 'firebase/firestore'
+import Popup from './components/Popup'
 
 // Create a new context for the calculator
 const CalculatorContext = React.createContext()
@@ -33,6 +34,8 @@ const CalculatorProvider = ({ children }) => {
 
     const [isPlayMode, setIsPlayMode] = useState(false)
     const [hideContainers, setHideContainers] = useState(true)
+    const [showPopup, setShowPopup] = useState(false)
+    const [popupLink, setPopupLink] = useState('')
     const levelsRef = collection(db, 'levels')
 
     // Function to update the initial values based on user input
@@ -62,11 +65,17 @@ const CalculatorProvider = ({ children }) => {
                 .then((docRef) => {
                     const id = docRef.id.slice(0, 5)
                     updateDoc(docRef, { id: id, ...docRef.data })
-                    alert(`${window.location.hostname}/${id}`)
+                    setPopupLink(`https://${window.location.hostname}/${id}`)
+                    setShowPopup(true)
                 })
         } catch (error) {
             console.log(`error: ${error}`)
         }
+    }
+
+    function handleClose() {
+        setPopupLink('')
+        setShowPopup(false)
     }
 
     return (
@@ -110,6 +119,8 @@ const CalculatorProvider = ({ children }) => {
                     </div>
                 </div>
             }
+            {showPopup && <Popup link={popupLink} handleClose={handleClose}/>}
+            {/* <h1>{`link is ${popupLink}`}</h1> */}
             {children}
         </CalculatorContext.Provider>
     )

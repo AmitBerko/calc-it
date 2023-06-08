@@ -319,23 +319,65 @@ input::-webkit-inner-spin-button {
     * {
         user-select: text;
     }
+}
 
-    button {
-        padding: 0.5rem 1rem;
-        background-color: black;
-        border: none;
-        color: #fff;
-        font-size: 1.25rem;
-        cursor: pointer;
+.close-button {
+    padding: 0.5rem 1rem;
+    background-color: black;
+    border: none;
+    color: #fff;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    z-index: 1;
+    border: 2.5px solid #ccc;
+    border-radius: 0.75rem;
+    background-color: white;
+    padding: 0.8rem;
+    padding-left: 1.25rem;
+
+    h1 {
+        text-align: center;
+        font-size: 4rem;
     }
+
+    a {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    p {
+        font-size: 2rem;
+    }
+
+    * {
+        user-select: text;
+    }
+}
+
+.popup-container {
+    position: relative;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(204, 204, 204, 0.8);
 }
 
 @media (max-width: 768px) {
     .calculator-container {
         min-width: fit-content;
-        min-width: none;
         width: 80vw;
-        height: 70vh;
+        height: 67.5vh;
         padding: 1rem;
         .buttons-container {
             row-gap: 1.25rem;
@@ -355,8 +397,8 @@ input::-webkit-inner-spin-button {
         font-size: 1.25rem !important;
     }
 
-    .clr {
-        font-size: 1.5rem !important;
+    .clr, .add-digit, .operator {
+        font-size: 1.7rem !important;
     }
 
     #result {

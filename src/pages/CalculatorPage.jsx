@@ -178,7 +178,6 @@ function CalculatorPage() {
                 </svg>
             }
 
-
             {showRules && <RulesContainer onClose={handleCloseRules} />}
         </>
     )
