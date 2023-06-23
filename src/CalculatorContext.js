@@ -126,7 +126,7 @@ const CalculatorProvider = ({ children }) => {
                 </div>
             }
             {showPopup && <Popup link={popupLink} handleClose={handleClose}/>}
-            {!isPlayMode && showPhonePopup && <PhonePopup handleClose={handlePhoneClose}/>}
+            {!isPlayMode && showPhonePopup && <PhonePopup />}
             {children}
         </CalculatorContext.Provider>
     )

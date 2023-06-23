@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PhonePopup({ handleClose }) {
+function PhonePopup() {
     const exampleLevels = [
         {
             title: 'Very Easy Level',
@@ -27,7 +27,7 @@ function PhonePopup({ handleClose }) {
             link: 'https://calcit.pro/GGc2i',
             description: '',
         },
-    ];
+    ]
 
     return (
         <div className="popup-container phone-popup">

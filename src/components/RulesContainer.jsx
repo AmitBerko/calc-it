@@ -1,12 +1,39 @@
 import React from 'react'
 
 const RulesContainer = ({ onClose }) => {
+    const exampleLevels = [
+        {
+            title: 'Very Easy Level',
+            link: 'https://calcit.pro/C3Se1',
+            description: '',
+        },
+        {
+            title: 'Easy Level',
+            link: 'https://calcit.pro/h7uA2',
+            description: '',
+        },
+        {
+            title: 'Medium Level',
+            link: 'https://calcit.pro/MXmrf',
+            description: '',
+        },
+        {
+            title: 'Hard Level',
+            link: 'https://calcit.pro/l5kGH',
+            description: '',
+        },
+        {
+            title: 'Very Hard Level',
+            link: 'https://calcit.pro/GGc2i',
+            description: '',
+        },
+    ]
+
     return (
         <div className="rules-container">
-            <h1>Game Rules:</h1>
+            <h1>Game Rules</h1>
             <p>
-                The goal of the game is to reach a specific number by strategically making moves using the available buttons.
-                Each button represents a mathematical operation or action that can be applied to the current result.
+                The goal is to reach the target number by strategically using buttons that perform mathematical operations on the current result.
             </p>
 
             <h2>Building a Level:</h2>
@@ -14,18 +41,15 @@ const RulesContainer = ({ onClose }) => {
                 <li>
                     <strong>Edit Settings: </strong>
                     On the right side of the screen, you can find the level settings panel.
-                    Here, you can configure various parameters for the level, such as the initial result, the goal, and number of moves.
+                    There, you can configure various parameters for the level, such as the initial result, the goal, and number of moves.
                 </li>
                 <li>
                     <strong>Adding Buttons: </strong>
-                    To add a button to the level, simply click on an empty button slot.
-                    A menu will appear where you can choose the type of button you want to add.
-                    Select the desired button type, and it will be added to the level.
+                    Click on an empty button slot and choose a button type to add it to the level.
                 </li>
                 <li>
                     <strong>Deleting Buttons: </strong>
-                    If you wish to remove a button from the level, right-click on the button you want to delete and
-                    it will be removed from the calculator.
+                    Right-click on a button to remove it from the calculator.
                 </li>
             </ol>
 
@@ -33,11 +57,11 @@ const RulesContainer = ({ onClose }) => {
             <ul>
                 <li>
                     <strong>Operator Button: </strong>
-                    Performs a specific mathematical operation (e.g., addition, subtraction, multiplication) on the current result.
+                    Performs a mathematical operation on the current result.
                 </li>
                 <li>
                     <strong>Add Digit Button: </strong>
-                    Adds a digit (or a number) to the current result. Represented by a purple button (e.g., clicking on a "10" purple button would change the result from 123 to 12310)
+                    Adds the corresponding number to the current result. 
                 </li>
                 <li>
                     <strong>Reverse Button: </strong>
@@ -53,11 +77,11 @@ const RulesContainer = ({ onClose }) => {
                 </li>
                 <li>
                     <strong>Plus/Minus Button: </strong>
-                    Changes the sign of the current number. Represented by +/-.
+                    Changes the sign of the current number.
                 </li>
                 <li>
                     <strong>Delete Button: </strong>
-                    Deletes the last digit from the current number. Represented by &lt;&lt; (e.g., clicking the delete button would turn the result 123 to 12)
+                    Deletes the last digit from the current number. Represented by &lt;&lt;
                 </li>
                 <li>
                     <strong>Sum Button: </strong>
@@ -68,6 +92,16 @@ const RulesContainer = ({ onClose }) => {
                     Raises the current number to a specified power.
                 </li>
             </ul>
+            <div className="link-container">
+                <h2>Example Levels:</h2>
+                <ul>
+                    {exampleLevels.map((level, index) => (
+                        <li key={index}>
+                            <a href={level.link}>{level.title}</a> {level.description}
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <button className="close-button" onClick={onClose}>Close</button>
         </div>
     )
