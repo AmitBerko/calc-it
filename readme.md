@@ -97,7 +97,7 @@ To install and run the Calculator The Game Editor locally, follow these steps:
 
 5. Open your browser and visit `http://localhost:3000` to access the Calculator The Game Editor.
 
-## Level Examples
+## Example Levels
 
 Explore these level examples created using the Calculator The Game Editor:
 
@@ -107,6 +107,6 @@ Explore these level examples created using the Calculator The Game Editor:
 
 3. **Medium Level:** [calcit.pro/MXmrf](https://calcit.pro/MXmrf) - Moderate challenge requiring strategic thinking.
 
-4. **Hard Level:** [calcit.pro/l5kGH](https://calcit.pro/l5kGH) - A difficult and confusing level.
+4. **Hard Level:** [calcit.pro/l5kGH](https://calcit.pro/l5kGH) - A difficult confusing level.
 
 5. **Very Hard Level:** [calcit.pro/GGc2i](https://calcit.pro/GGc2i) - Advanced level with a tricky solution.
