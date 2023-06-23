@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { db } from './config/firebase'
 import { collection, addDoc, updateDoc } from 'firebase/firestore'
 import Popup from './components/Popup'
+import PhonePopup from './components/PhonePopup'
 
 // Create a new context for the calculator
 const CalculatorContext = React.createContext()
@@ -35,6 +36,7 @@ const CalculatorProvider = ({ children }) => {
     const [isPlayMode, setIsPlayMode] = useState(false)
     const [hideContainers, setHideContainers] = useState(true)
     const [showPopup, setShowPopup] = useState(false)
+    const [showPhonePopup, setShowPhonePopup] = useState(true)
     const [popupLink, setPopupLink] = useState('')
     const levelsRef = collection(db, 'levels')
 
@@ -76,6 +78,10 @@ const CalculatorProvider = ({ children }) => {
     function handleClose() {
         setPopupLink('')
         setShowPopup(false)
+    }
+
+    function handlePhoneClose() {
+        setShowPhonePopup(false)
     }
 
     return (
@@ -120,7 +126,7 @@ const CalculatorProvider = ({ children }) => {
                 </div>
             }
             {showPopup && <Popup link={popupLink} handleClose={handleClose}/>}
-            {/* <h1>{`link is ${popupLink}`}</h1> */}
+            {!isPlayMode && showPhonePopup && <PhonePopup handleClose={handlePhoneClose}/>}
             {children}
         </CalculatorContext.Provider>
     )
