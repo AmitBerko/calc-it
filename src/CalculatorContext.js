@@ -80,10 +80,6 @@ const CalculatorProvider = ({ children }) => {
         setShowPopup(false)
     }
 
-    function handlePhoneClose() {
-        setShowPhonePopup(false)
-    }
-
     return (
         // Provide the state variables and setters through the context
         <CalculatorContext.Provider

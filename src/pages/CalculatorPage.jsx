@@ -5,7 +5,7 @@ import EditButton from '../components/EditButton'
 import CalculatorButton from '../components/CalculatorButton'
 import { CalculatorContext } from '../CalculatorContext'
 import { db } from '../config/firebase'
-import { getDocs, collection, addDoc, updateDoc } from 'firebase/firestore'
+import { getDocs, collection } from 'firebase/firestore'
 import RulesContainer from '../components/RulesContainer'
 
 function CalculatorPage() {
