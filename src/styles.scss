@@ -64,6 +64,7 @@ input::-webkit-inner-spin-button {
     width: 26vw;
     height: 70vh;
     min-width: 25rem;
+    max-height: 40rem;
     grid-template-areas:
         "screen"
         "buttons";
